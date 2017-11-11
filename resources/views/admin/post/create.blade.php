@@ -52,6 +52,16 @@
                                 </div>
                             </div>
 
+                            <div class="form-group col-sm-12">
+                                <label for="title" class="col-sm-2 control-label">帖子标题<span
+                                            class="required-field">*</span></label>
+
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" name="title" id="title"
+                                           value="@if(!empty($post)){{$post->title}}@endif">
+                                </div>
+                            </div>
+
                             <div class="form-group  col-sm-12">
                                 <label for="editor" class="col-sm-2 control-label">帖子内容<span
                                             class="required-field">*</span></label>
@@ -59,7 +69,9 @@
                                 <div class="col-sm-10">
                                     <input type="hidden" value="{{$post->id or 0}}" name="id">
                                     <div id="editor">
-                                        @if(!empty($post)){!! $post->content !!}@endif
+                                        <p>
+                                            @if(!empty($post)){!! $post->content !!}@endif
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -107,6 +119,7 @@
             $('button.btn-save').click(function () {
                 var forumId = $('#forum_id').val();
                 var userId = $('#user_id').val();
+                var title = $('#title').val();
                 var content = editor.txt.html();
 
                 console.log(forumId, userId, content);
@@ -124,13 +137,14 @@
                         data: {
                             'forum_id': forumId,
                             'user_id': userId,
+                            'title': title,
                             'content': content
                         },
                         dataType: "JSON",
                         beforeSend: null,
                         success: function (data) {
                             console.log(data);
-                            if (0 == data.status) {
+                            if (0 == data.error) {
                                 location.href = "/admin/posts";
                             }
                         },

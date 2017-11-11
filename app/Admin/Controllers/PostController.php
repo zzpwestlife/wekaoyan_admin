@@ -2,9 +2,11 @@
 
 namespace App\Admin\Controllers;
 
+use App\File;
 use App\Forum;
 use App\Post;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -17,7 +19,6 @@ class PostController extends Controller
      */
     public function index()
     {
-
         $posts = Post::whereNull('deleted_at')->with('user')->with('forum')->orderBy(
             'updated_at',
             'desc'
@@ -57,16 +58,18 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $id = intval($request->input('id', 0));
+        $title = trim($request->input('title', ''));
         $content = trim($request->input('content', ''));
         $user_id = intval($request->input('user_id', 0));
         $forum_id = intval($request->input('forum_id', 0));
         $this->validate($request, [
+            'title' => 'required|min:4',
             'content' => 'required|min:4',
             'user_id' => 'required|min:1',
             'forum_id' => 'required|min:1',
         ]);
 
-        $data = compact('content', 'user_id', 'forum_id');
+        $data = compact('content', 'user_id', 'forum_id', 'title');
 
         if (empty($id)) {
             Post::create($data);
@@ -82,7 +85,6 @@ class PostController extends Controller
             return response()->json($returnData)->setCallback($request->input('callback'));
         }
         return redirect('/admin/posts');
-
     }
 
     /**
@@ -120,16 +122,45 @@ class PostController extends Controller
      */
     public function imageUpload(Request $request)
     {
-        // TODO 测试storage link 生成的路径是否只是在Linux下能访问
-        $path = $request->file('wangEditorImg')->storePublicly(microtime(true) * 10000);
-
         $returnData = [
-            'errno' => 0,
-            'data' => [
-                asset('storage/' . $path)
-            ]
+            'errno' => -1,
+            'msg' => '',
+            'data' => ''
         ];
+        $file = $request->file('wangEditorImg');
+
+        $path = sprintf('%s/posts/%s/', APP_ROOT, Carbon::now()->month);
+//        autoMakeDir($path);
+
+//        var_dump($file->getError()); // 0
+//        var_dump($file->getFilename()); // php3R7aUM
+//        var_dump($file->getExtension());
+//        var_dump($file->getClientMimeType()); // image/png
+//        var_dump($file->getClientOriginalExtension()); // png
+//        var_dump($file->getClientOriginalName()); // bef3df8aly1fbx05q2ra1j20b40b4mxi.png
+//        var_dump($file->getErrorMessage()); // The file "bef3df8aly1fbx05q2ra1j20b40b4mxi.png" was not uploaded due to an unknown error.
+//        var_dump($file->getBasename()); // php3R7aUM
+//        var_dump($file->getPath()); // /tmp
+//        var_dump($file->getPathname()); // /tmp/php3R7aUM
+//        var_dump($file->getType()); // file
+//        var_dump($file->getRealPath()); // /tmp/php3R7aUM
+
+        $error = $file->getError();
+        if ($error != 0) {
+            $returnData['msg'] = $file->getErrorMessage();
+        } else {
+            $fileExt = $file->getClientOriginalExtension();
+            // 新文件名
+            $newFilename = sprintf('%s_%s.%s', time(), rand(10000, 99999), $fileExt);
+            // 移动文件
+            $filePath = $path . $newFilename;
+            $file->move($path, $newFilename);
+            $returnData['errno'] = 0;
+            $fileUrl = sprintf('%s/posts/%s/', APP_URL, Carbon::now()->month) . $newFilename;
+            // http://wekaoyan_admin.dev.com/posts/11/1510388528_47787.jpg
+            $returnData['data'] = [$fileUrl];
+        }
+
         return response()->json($returnData)->setCallback($request->input('callback'));
     }
 }
-

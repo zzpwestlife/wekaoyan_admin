@@ -31,7 +31,7 @@
                             <thead>
                             <tr role="row">
                                 <th style="width: 10px">#</th>
-                                <th>帖子内容</th>
+                                <th>经验贴标题</th>
                                 <th>发表用户</th>
                                 <th>所在论坛</th>
                                 <th>添加时间</th>
@@ -46,7 +46,7 @@
                                 @foreach($posts as $item)
                                     <tr>
                                         <td width="6%">{{$item->id}}</td>
-                                        <td width="30%">{{$item->short_content}}</td>
+                                        <td width="30%">{{$item->title}}</td>
                                         <td>@if(isset($item->user)){{$item->user->name}}@endif</td>
                                         <td width="20%">{{$item->forum->name}}</td>
                                         <td>{{$item->created_at->diffForHumans()}}</td>

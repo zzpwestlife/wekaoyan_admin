@@ -9,3 +9,4 @@ _ide_helper.php
 refresh-test.gif
 .php_cs.cache
 /public/bower_components
+/storage/framework/sessions/*.*
