@@ -1,0 +1,13 @@
+.required-field {
+    position: absolute;
+    color: red;
+    font-weight: bolder;
+    font-size: 18px;
+    line-height: 24px;
+}
+
+label.control-label {
+    padding-top: 7px;
+    margin-bottom: 0;
+    text-align: right;
+}
