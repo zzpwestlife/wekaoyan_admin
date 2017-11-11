@@ -63,7 +63,7 @@ class PostController extends Controller
         $user_id = intval($request->input('user_id', 0));
         $forum_id = intval($request->input('forum_id', 0));
         $this->validate($request, [
-            'title' => 'required|min:4',
+            'title' => 'required|min:1',
             'content' => 'required|min:4',
             'user_id' => 'required|min:1',
             'forum_id' => 'required|min:1',
@@ -130,7 +130,7 @@ class PostController extends Controller
         $file = $request->file('wangEditorImg');
 
         $path = sprintf('%s/posts/%s/', APP_ROOT, Carbon::now()->month);
-//        autoMakeDir($path);
+        autoMakeDir($path);
 
 //        var_dump($file->getError()); // 0
 //        var_dump($file->getFilename()); // php3R7aUM

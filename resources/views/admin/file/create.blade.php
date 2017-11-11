@@ -18,6 +18,7 @@
                     <!-- /.box-header -->
                     {{--文件上传--}}
                     <form action="/admin/files/upload" class="dropzone" id="file">
+                        <div class="dz-message">点击此处或拖拽文件到此处</div>
                     </form>
 
                     <!-- form start -->
@@ -110,6 +111,7 @@
             </div>
         </div>
     </section>
+
 @endsection
 
 @section('add_script')
@@ -125,6 +127,22 @@
             $("#form-item").validate();
             $(".select2").select2({language: "zh-CN"});
             $("div.switch input[type=\"checkbox\"]").not("[data-switch-no-init]").bootstrapSwitch();
+
+            Dropzone.options.file = {
+                paramName: "file", // The name that will be used to transfer the file
+                maxFilesize: 10, // MB
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                accept: function (file, done) {
+                    if (file.name == "justinbieber.jpg") {
+                        done("Naha, you don't.");
+                    }
+                    else {
+                        done();
+                    }
+                },
+            };
         });
     </script>
 @endsection
