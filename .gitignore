@@ -1,6 +1,7 @@
 .env
 vendor
 !.gitignore
+!.env.production
 composer.lock
 _ide_helper.php
 .idea

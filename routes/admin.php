@@ -206,5 +206,7 @@ Route::group(['prefix' => 'admin'], function () {
     ]);
 
     Route::post('/files/store', '\App\Admin\Controllers\FileController@store');
+    // 文件上传
+    Route::post('/files/upload', '\App\Admin\Controllers\FileController@upload');
     Route::post('/files/delete', '\App\Admin\Controllers\FileController@delete');
 });

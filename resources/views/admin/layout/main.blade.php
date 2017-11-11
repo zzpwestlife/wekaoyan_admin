@@ -102,7 +102,7 @@
     <script src="/adminlte/dist/js/demo.js"></script>
     <script src="/adminlte/plugins/select2/select2.js"></script>
     <script src="{{ mix('/js/admin.js') }}"></script>
-    <script src="/bower_components/jquery-form/src/jquery.form.js"></script>
+    <script src="/bower_components/jquery-form/jquery.form.js"></script>
     <script src="/bower_components/jquery-validation/dist/jquery.validate.js"></script>
     <script type="text/javascript" src="/bower_components/wangEditor/release/wangEditor.min.js"></script>
     @yield('add_script')

@@ -1,0 +1,57 @@
+{
+  "name": "wekaoyan/admin",
+  "authors": [
+    "zouzhipeng <zzpwestlife@gmail.com>"
+  ],
+  "description": "wekaoyan admin",
+  "main": "",
+  "moduleType": [
+    "node"
+  ],
+  "keywords": [
+    "admin"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.2.4",
+    "jquery-form": "~3.46.0",
+    "animate.css": "~3.5.1",
+    "blueimp-bootstrap-image-gallery": "<=3.4.2",
+    "bootstrap": "<=3.3.6",
+    "eonasdan-bootstrap-datetimepicker": "<=4.17.37",
+    "art-template": "~3.0.1",
+    "blueimp-gallery": "~2.18.1",
+    "dropzone": "<=4.3.0",
+    "font-awesome": "~4.6.0",
+    "jquery.nicescroll": "~3.6.7",
+    "jquery-ui": "~1.11.4",
+    "jquery-validation": "~1.14.0",
+    "PACE": "pace#~1.0.2",
+    "remarkable-bootstrap-notify": "~3.1.3",
+    "select2": "~4.0.1",
+    "select2-bootstrap-theme": "~0.1.0-beta.4",
+    "wow": "~1.1.2",
+    "bootstrap-switch": "~3.3.2",
+    "cropper": "~2.3.0",
+    "kartik-v/bootstrap-fileinput": "<=4.3.8",
+    "Plupload": "^2.1.9",
+    "moment": "<=2.14.1",
+    "moment-timezone": "<=0.5.5",
+    "Swiper": "swiper#~3.3.1",
+    "blueimp-file-upload": "^9.12.5",
+    "clipboard": "~1.5.16",
+    "mediaelement": "~4.2.6",
+    "swiper": "^3.4.2"
+  },
+  "resolutions": {
+    "jquery": "~2.2.4"
+  }
+}

@@ -2,6 +2,7 @@
 
 @section('add_css')
     {!! Html::style('/bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css') !!}
+    {!! Html::style('/dropzone/dist/min/dropzone.min.css') !!}
 @endsection
 
 @section("content")
@@ -15,6 +16,10 @@
                         <h3 class="box-title">@if(isset($file))编辑文件@else增加文件@endif</h3>
                     </div>
                     <!-- /.box-header -->
+                    {{--文件上传--}}
+                    <form action="/admin/files/upload" class="dropzone" id="file">
+                    </form>
+
                     <!-- form start -->
                     <form role="form" action="/admin/files/store" method="POST" id="form-item">
                         {{csrf_field()}}
@@ -53,18 +58,6 @@
                                 </div>
                             </div>
 
-                            {{--<div class="form-group col-sm-12">--}}
-                            {{--<label for="course_type" class="control-label col-sm-2">选择课程类型<span--}}
-                            {{--class="required-field">*</span></label>--}}
-
-                            {{--<div class="col-sm-4 col-md-4 col-lg-4 switch">--}}
-                            {{--<input type="checkbox" id="course_type" name="course_type" value="1"--}}
-                            {{--@if($file->type==1) checked="checked"--}}
-                            {{--@endif data-on-text="公开课"--}}
-                            {{--data-off-text="专业课"/>--}}
-                            {{--</div>--}}
-                            {{--</div>--}}
-
                             <div class="form-group col-sm-12">
                                 <label for="type" class="control-label col-sm-2">选择文件类型<span
                                             class="required-field">*</span></label>
@@ -78,56 +71,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                {{--<div class="col-sm-4 col-md-4 col-lg-4 switch">--}}
-                                {{--<input type="checkbox" id="type" name="type" value="0"--}}
-                                {{--@if($file->type==1) checked="checked"--}}
-                                {{--@endif data-on-text="资料"--}}
-                                {{--data-off-text="真题答案"/>--}}
-                                {{--</div>--}}
                             </div>
-
-
-                            {{--<div class="form-group col-sm-12" id="wrapper_upload_file">--}}
-                            {{--<label for="input_file" class="control-label col-sm-2">文件<span--}}
-                            {{--class="required-field">*</span></label>--}}
-
-                            {{--<div class="col-sm-4">--}}
-
-                            {{--<div id="media_file_preview" class="media-preview">--}}
-                            {{--@if ($file->filename)--}}
-                            {{--<span class="preview"><video src="{{$file->file_path}}" controls="controls">您的浏览器不支持 video 标签。</video></span>--}}
-                            {{--@else--}}
-                            {{--<img src="/images/nofile.png"--}}
-                            {{--style="top:45px;height:160px;min-width:160px;max-width:320px">--}}
-                            {{--@endif--}}
-                            {{--</div>--}}
-
-                            {{--<div class="media-actions fileupload-buttonbar">--}}
-
-                            {{--<button type="button" title="取消"--}}
-                            {{--class="btn btn-default cancel">--}}
-                            {{--<i class="glyphicon glyphicon-remove"></i>--}}
-                            {{--<span class="hidden-xs">取消</span>--}}
-                            {{--</button>--}}
-
-                            {{--<div class="btn btn-primary btn-file" id="choose-file">--}}
-                            {{--<i class="glyphicon glyphicon-folder-open"></i>--}}
-                            {{--<span class="hidden-xs">选择</span>--}}
-                            {{--<input type="file" name="file" accept="*/*" title="选择文件" id="input_file"--}}
-                            {{--class="">--}}
-                            {{--</div>--}}
-
-                            {{--<button type="submit" title="上传" id="btn_upload_file" style="display:none;"--}}
-                            {{--class="btn btn-success start">--}}
-                            {{--<i class="glyphicon glyphicon-upload"></i>--}}
-                            {{--<span>上传</span>--}}
-                            {{--</button>--}}
-
-                            {{--<input type="hidden" id="target_file_name" name="target_file_name">--}}
-
-                            {{--</div>--}}
-                            {{--</div>--}}
-                            {{--</div>--}}
 
                             <div class="form-group col-sm-12">
                                 <label for="filename" class="col-sm-2 control-label">文件名<span
@@ -161,6 +105,7 @@
                         </div>
                         <!-- /.box-footer -->
                     </form>
+
                 </div>
             </div>
         </div>
@@ -169,6 +114,7 @@
 
 @section('add_script')
     {!! Html::script('/bower_components/bootstrap-switch/dist/js/bootstrap-switch.min.js') !!}
+    <script src="/dropzone/dist/min/dropzone.min.js"></script>
 @endsection
 
 @section('script')
