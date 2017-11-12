@@ -170,6 +170,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/questions/store', '\App\Admin\Controllers\QuestionController@store');
     Route::post('/questions/delete', '\App\Admin\Controllers\QuestionController@delete');
 
+    // 图片上传
+    Route::post('/questions/image/upload', '\App\Admin\Controllers\QuestionController@imageUpload');
+
     /**
      * 问题答案管理----------------------------------------------------------------------------------------------------------
      */

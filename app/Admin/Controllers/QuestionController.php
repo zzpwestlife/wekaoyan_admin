@@ -117,19 +117,11 @@ class QuestionController extends Controller
      * @param Request $request
      * @return $this
      * @author zzp
-     * @date 2017-11-04
+     * @date 2017-11-12
      */
-//    public function imageUpload(Request $request)
-//    {
-//        // TODO 测试storage link 生成的路径是否只是在Linux下能访问
-//        $path = $request->file('wangEditorImg')->storePublicly(microtime(true) * 10000);
-//
-//        $returnData = [
-//            'errno' => 0,
-//            'data' => [
-//                asset('storage/' . $path)
-//            ]
-//        ];
-//        return response()->json($returnData)->setCallback($request->input('callback'));
-//    }
+    public function imageUpload(Request $request)
+    {
+        $returnData = imageUpload($request->file('wangEditorImg'), 'questions');
+        return response()->json($returnData)->setCallback($request->input('callback'));
+    }
 }

@@ -18,6 +18,7 @@
                     <!-- form start -->
                     <form role="form" action="" id="form-item">
                         {{csrf_field()}}
+                        <input type="hidden" value="{{$post->id or 0}}" name="id" id="id">
                         <div class="box-body">
 
                             <div class="form-group col-sm-12">
@@ -67,7 +68,6 @@
                                             class="required-field">*</span></label>
 
                                 <div class="col-sm-10">
-                                    <input type="hidden" value="{{$post->id or 0}}" name="id">
                                     <div id="editor">
                                         <p>
                                             @if(!empty($post)){!! $post->content !!}@endif
@@ -117,6 +117,7 @@
             editor.create();
 
             $('button.btn-save').click(function () {
+                var id = $('#id').val();
                 var forumId = $('#forum_id').val();
                 var userId = $('#user_id').val();
                 var title = $('#title').val();
@@ -135,6 +136,7 @@
                         type: "POST",
                         url: "/admin/posts/store",
                         data: {
+                            'id': id,
                             'forum_id': forumId,
                             'user_id': userId,
                             'title': title,

@@ -75,7 +75,7 @@
                                                 <a class="btn btn-icon btn-danger btn-delete"
                                                    data-toggle="tooltip"
                                                    href="javascript:;" title="删除" data-operate-type="delete"
-                                                   data-item-id="{{$item->id}}" data-item-content="{{$item->content}}">
+                                                   data-item-id="{{$item->id}}" data-item-title="{{$item->title}}">
                                                     <i class="fa fa-trash"></i>
                                                 </a>
                                             @endif
@@ -122,7 +122,7 @@
 
                     $('.btn-delete').click(function () {
                         var itemId = $(this).attr("data-item-id");
-                        var itemName = $(this).attr("data-item-content");
+                        var itemName = $(this).attr("data-item-title");
                         if (window.confirm('你确定要删除 ' + itemName + ' 吗？')) {
                             $.ajax({
                                 type: "POST",

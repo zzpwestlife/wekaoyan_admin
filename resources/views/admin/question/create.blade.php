@@ -57,7 +57,7 @@
                                             class="required-field">*</span></label>
 
                                 <div class="col-sm-4">
-                                    <input type="hidden" value="{{$question->id or 0}}" name="id">
+                                    <input type="hidden" value="{{$question->id or 0}}" name="id" id="id">
                                     <input type="text" class="form-control" name="title" id="title" minlength="4"
                                            required
                                            value="@if(!empty($question)){{$question->title}}@endif" placeholder="请输入标题">
@@ -116,6 +116,7 @@
             editor.create();
 
             $('button.btn-save').click(function () {
+                var id = $('#id').val();
                 var forumId = $('#forum_id').val();
                 var userId = $('#user_id').val();
                 var title = $('#title').val();
@@ -134,6 +135,7 @@
                         type: "POST",
                         url: "/admin/questions/store",
                         data: {
+                            'id': id,
                             'forum_id': forumId,
                             'user_id': userId,
                             'title': title,
