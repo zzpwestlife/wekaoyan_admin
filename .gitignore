@@ -10,4 +10,4 @@ refresh-test.gif
 .php_cs.cache
 /public/bower_components
 /public/uploads
-/storage/framework/sessions/*.*
+/storage/framework/sessions
