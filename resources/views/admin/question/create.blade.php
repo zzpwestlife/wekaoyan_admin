@@ -70,7 +70,9 @@
 
                                 <div class="col-sm-10">
                                     <div id="editor">
-                                        @if(!empty($question)){!! $question->content !!}@endif
+                                        <p>
+                                            @if(!empty($question)){!! $question->content !!}@endif
+                                        </p>
                                     </div>
                                 </div>
                             </div>

@@ -121,7 +121,7 @@ class QuestionController extends Controller
      */
     public function imageUpload(Request $request)
     {
-        $returnData = imageUpload($request->file('wangEditorImg'), 'questions');
+        $returnData = imageUpload($request->file('wangEditorImg'), 'questions', true);
         return response()->json($returnData)->setCallback($request->input('callback'));
     }
 }

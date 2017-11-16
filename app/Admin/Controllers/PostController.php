@@ -122,7 +122,7 @@ class PostController extends Controller
      */
     public function imageUpload(Request $request)
     {
-        $returnData = imageUpload($request->file('wangEditorImg'), 'posts');
+        $returnData = imageUpload($request->file('wangEditorImg'), 'posts', true);
         return response()->json($returnData)->setCallback($request->input('callback'));
     }
 }

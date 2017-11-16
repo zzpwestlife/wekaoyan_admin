@@ -441,7 +441,7 @@ function imageUpload($file, $dirName, $isWangEditor = false)
         'data' => ''
     ];
 
-    $path = sprintf('%s/uploads/%s/%s/', APP_ROOT, $dirName, \Carbon\Carbon::now()->month);
+    $path = sprintf('%s/uploads/%s/%s/', DATA_ROOT, $dirName, \Carbon\Carbon::now()->month);
     autoMakeDir($path);
 
 //        var_dump($file->getError()); // 0
@@ -467,7 +467,7 @@ function imageUpload($file, $dirName, $isWangEditor = false)
         // 移动文件
         $file->move($path, $newFilename);
         $returnData['errno'] = 0;
-        $fileUrl = sprintf('%s/uploads/%s/%s/', APP_URL, $dirName, \Carbon\Carbon::now()->month) . $newFilename;
+        $fileUrl = sprintf('%s/uploads/%s/%s/', DATA_URL, $dirName, \Carbon\Carbon::now()->month) . $newFilename;
         // http://wekaoyan_admin.dev.com/posts/11/1510388528_47787.jpg
         if ($isWangEditor) {
             $returnData['data'] = [$fileUrl];
