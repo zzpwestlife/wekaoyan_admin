@@ -17,9 +17,14 @@
                     </div>
                     <!-- /.box-header -->
                     {{--文件上传--}}
-                    <form action="/admin/files/upload" class="dropzone" id="file">
-                        <div class="dz-message">点击此处或拖拽文件到此处</div>
-                    </form>
+                    {{--<form action="/admin/files/upload" class="dropzone" id="file">--}}
+                    {{--<div class="dz-message">点击此处或拖拽文件到此处</div>--}}
+                    {{--</form>--}}
+                    <div class="dropzone dz-clickable" id="myDrop">
+                        <div class="dz-default dz-message" data-dz-message="">
+                            <span style="font-size: large">点击此处或拖拽文件到此处（一个文件）</span>
+                        </div>
+                    </div>
 
                     <!-- form start -->
                     <form role="form" action="/admin/files/store" method="POST" id="form-item">
@@ -81,6 +86,12 @@
                                 <div class="col-sm-6">
                                     <input type="text" class="form-control" name="filename" id="filename"
                                            value="@if(!empty($file)){{$file->filename}}@endif">
+                                    <input type="hidden" class="form-control" name="path" id="path"
+                                           value="@if(!empty($file)){{$file->path}}@endif">
+                                    <input type="hidden" class="form-control" name="url" id="url"
+                                           value="@if(!empty($file)){{$file->url}}@endif">
+                                    <input type="hidden" class="form-control" name="hash" id="hash"
+                                           value="@if(!empty($file)){{$file->hash}}@endif">
                                 </div>
                             </div>
 
@@ -122,27 +133,52 @@
 @section('script')
 
     <script type="text/javascript">
+        Dropzone.autoDiscover = false; // 这一行一定要放在ready之前
         $(document).ready(function () {
             $('#name').focus();
             $("#form-item").validate();
             $(".select2").select2({language: "zh-CN"});
             $("div.switch input[type=\"checkbox\"]").not("[data-switch-no-init]").bootstrapSwitch();
 
-            Dropzone.options.file = {
+            var myDropzone = new Dropzone("div#myDrop", {
+                url: "/admin/files/upload",
                 paramName: "file", // The name that will be used to transfer the file
-                maxFilesize: 10, // MB
+                maxFilesize: 20, // MB
+                maxFiles: 1, // 一个一个来
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                accept: function (file, done) {
-                    if (file.name == "justinbieber.jpg") {
-                        done("Naha, you don't.");
-                    }
-                    else {
-                        done();
-                    }
-                },
-            };
+                }
+            });
+
+            myDropzone.on('addedfile', function (file) {
+                if (file.size > 1024 * 1024 * 20) {
+                    alert('文件大小不能超过20M');
+                }
+//                file.previewElement.addEventListener("click", function () {
+//                    myDropzone.removeFile(file);
+//                });
+            });
+
+            myDropzone.on('success', function (file, response) {
+                console.log(file);
+                console.log(response);
+                if (response.errno == 0) {
+//                    alert('文件上传成功');
+                    $('#filename').attr('value', response.data['filename']);
+                    $('#path').attr('value', response.data['path']);
+                    $('#url').attr('value', response.data['url']);
+                    $('#hash').attr('value', response.data['hash']);
+                } else {
+                    alert(response.msg);
+                }
+            });
+
+            myDropzone.on('error', function (file, errorMessage) {
+                console.log(errorMessage);
+            });
+            myDropzone.on('removefile', function (file) {
+                alert('remove file');
+            });
         });
     </script>
 @endsection

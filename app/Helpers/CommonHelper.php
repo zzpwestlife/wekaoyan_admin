@@ -428,11 +428,12 @@ function getShareContent($str, $length = 0)
  * @comment 上传图片
  * @param object $file
  * @param string $dirName
+ * @param bool $isWangEditor
  * @return array
  * @author zzp
  * @date 2017-11-03
  */
-function imageUpload($file, $dirName)
+function imageUpload($file, $dirName, $isWangEditor = false)
 {
     $returnData = [
         'errno' => -1,
@@ -468,7 +469,80 @@ function imageUpload($file, $dirName)
         $returnData['errno'] = 0;
         $fileUrl = sprintf('%s/uploads/%s/%s/', APP_URL, $dirName, \Carbon\Carbon::now()->month) . $newFilename;
         // http://wekaoyan_admin.dev.com/posts/11/1510388528_47787.jpg
-        $returnData['data'] = [$fileUrl];
+        if ($isWangEditor) {
+            $returnData['data'] = [$fileUrl];
+        } else {
+            $returnData['data'] = $newFilename;
+        }
+    }
+
+    return $returnData;
+}
+
+/**
+ * @comment 上传文件 图片和文件按理应该分开
+ * @param object $file
+ * @param string $dirName
+ * @param bool $isWangEditor
+ * @return array
+ * @author zzp
+ * @date 2017-11-03
+ */
+function fileUpload($file, $dirName, $isWangEditor = false)
+{
+    $returnData = [
+        'errno' => -1,
+        'msg' => '',
+        'data' => ''
+    ];
+
+    $path = sprintf('%s/uploads/%s/%s/', DATA_ROOT, $dirName, \Carbon\Carbon::now()->month);
+    autoMakeDir($path);
+
+//        var_dump($file->getError()); // 0
+//        var_dump($file->getFilename()); // php3R7aUM
+//        var_dump($file->getExtension());
+//        var_dump($file->getClientMimeType()); // image/png
+//        var_dump($file->getClientOriginalExtension()); // png
+//        var_dump($file->getClientOriginalName()); // bef3df8aly1fbx05q2ra1j20b40b4mxi.png
+//        var_dump($file->getErrorMessage()); // The file "bef3df8aly1fbx05q2ra1j20b40b4mxi.png" was not uploaded due to an unknown error.
+//        var_dump($file->getBasename()); // php3R7aUM
+//        var_dump($file->getPath()); // /tmp
+//        var_dump($file->getPathname()); // /tmp/php3R7aUM
+//        var_dump($file->getType()); // file
+//        var_dump($file->getRealPath()); // /tmp/php3R7aUM
+
+    $error = $file->getError();
+    if ($error != 0) {
+        $returnData['msg'] = $file->getErrorMessage();
+    } else {
+        $fileExt = $file->getClientOriginalExtension();
+        // 新文件名
+        $originalFilename = $file->getClientOriginalName();
+        $realFilename = rtrim($originalFilename, '.' . $fileExt);
+        $newFilename = sprintf('%s_%s_%s.%s', $realFilename, time(), rand(10000, 99999), $fileExt);
+        $fileHash = hash_file('md5', $file->getPathname());
+        // 不允许重复上传相同的文件
+        $fileExist = \App\File::where('hash', $fileHash)->count();
+        if ($fileExist) {
+            $returnData['msg'] = '该文件已存在 请选择其他文件上传';
+        } else {
+            // 移动文件
+            $file->move($path, $newFilename);
+            $returnData['errno'] = 0;
+            $fileUrl = sprintf('%s/uploads/%s/%s/', APP_URL, $dirName, \Carbon\Carbon::now()->month) . $newFilename;
+            // http://wekaoyan_admin.dev.com/posts/11/1510388528_47787.jpg
+            if ($isWangEditor) {
+                $returnData['data'] = [$fileUrl];
+            } else {
+                $returnData['data'] = [
+                    'path' => $path,
+                    'url' => $fileUrl,
+                    'filename' => $newFilename,
+                    'file_hash' => $fileHash,
+                ];
+            }
+        }
     }
 
     return $returnData;

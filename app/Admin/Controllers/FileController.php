@@ -127,57 +127,7 @@ class FileController extends Controller
      */
     public function upload(Request $request)
     {
-        $file = Input::file('file');
-        dd($file);
-        $destinationPath = 'uploads';
-// If the uploads fail due to file system, you can try doing public_path().'/uploads'
-        $filename = str_random(12);
-//$filename = $file->getClientOriginalName();
-//$extension =$file->getClientOriginalExtension();
-        $upload_success = Input::file('file')->move($destinationPath, $filename);
-
-        $returnData = [
-            'errno' => 0,
-            'msg' => '',
-            'data' => ''
-        ];
-
+        $returnData = fileUpload($request->file('file'), 'file');
         return response()->json($returnData)->setCallback($request->input('callback'));
-
-        if ($upload_success) {
-            return Response::json('success', 200);
-        } else {
-            return Response::json('error', 400);
-        }
-
-
-//        $id = request('id');
-//        $this->validate($request, [
-//            'filename' => 'required|min:4|max:30',
-//            'forum_id' => 'required|min:1',
-//            'user_id' => 'required|min:1'
-//        ]);
-//
-//        $type = intval($request->input('type', 0));
-//        $forumId = intval($request->input('forum_id', 0));
-//        $userId = intval($request->input('user_id', 0));
-//        $filename = trim($request->input('filename', ''));
-//        $downloads = intval($request->input('downloads', 0));
-//
-//        $data = [
-//            'type' => $type,
-//            'forum_id' => $forumId,
-//            'user_id' => $userId,
-//            'filename' => $filename,
-//            'downloads' => $downloads,
-//            'status' => File::STATUS_VALID
-//        ];
-//
-//        if (empty($id)) {
-//            File::create($data);
-//        } else {
-//            File::where('id', $id)->update($data);
-//        }
-//        return redirect('/admin/files');
     }
 }
