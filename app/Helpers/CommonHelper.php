@@ -150,31 +150,13 @@ function saveImage($file_field, $save_path, $save_url, $dest_file_name = "", $fl
 }
 
 /**
- *
- * @param $picture
- * @param string $save_url 文件保存路径
- * @return string
- */
-function getImage($picture, $save_url = "")
-{
-    if (strtolower(substr($picture, 0, 4)) == "http") {
-        return $picture;
-    }
-    if (strtolower(substr($save_url, 0, 4)) != "http") {
-        $save_url = "http://" . $save_url;
-    }
-
-    return rtrim($save_url, '/') . "/" . $picture;
-}
-
-/*
  * 生成图片缩略图
  * @param $srcpath 原图片完整路径（包括文件名）
  * @param $topath 缩略图完整路径（包括文件名）
  * @param $maxwidth 最大宽度
  * @param $maxheight 最大高度
  * 原图宽高小于最大宽高时，不进行缩略图生成，直接copy原图。
-*/
+ */
 function createThumb($srcpath, $topath, $maxwidth, $maxheight)
 {
     if (!file_exists($srcpath)) {
@@ -279,7 +261,7 @@ function getFiles($dir, $recursion = false)
 
 /**
  * 图片压缩
- * @param $file压缩的图片
+ * @param object $file
  * @param int $max 图片最大宽度
  * @param int $quality 压缩质量
  * @return array 返回宽高
@@ -315,50 +297,6 @@ function autoMakeDir($filePath)
     }
 }
 
-function curl($url, $type = 0, $postData = [])
-{
-    if (!$url) {
-        return false;
-    }
-
-    if ($type == 0) {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_HEADER, false);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //如果把这行注释掉的话，就会直接输出
-    } elseif ($type == 1) {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
-    }
-
-    $result = curl_exec($ch);
-    curl_close($ch);
-
-    return $result;
-}
-
-/**
- * 获取语义化的时间
- * @param  int $timeStamp 时间戳,正为将来的时间,负为以前的时间
- * @return [string]
- * User lyf
- */
-function getSemanticTime($timeStamp)
-{
-    $state = (($timeStamp = intval($timeStamp)) > 0) ? '后' : '前';
-    $time = $timeStamp > 0 ? $timeStamp : -1 * $timeStamp;
-    if ($time < 3600) {
-        return $timeStamp > 0 ? date('G:i:s', $time) : date('i分钟前', $time);
-    } elseif ($time < 24 * 3600) {
-        return $timeStamp > 0 ? date('G:i:s', $time) : date('g小时i分钟前', $time);
-    } else {
-        return $time < 31 * 24 * 3600 ? date('d天' . $state, $time) : date('m月' . $state, $time);
-    }
-}
-
 /**
  * 获取IP地址
  * 由于服务器nginx代理的缘故 先通过 header 拿到真实ip
@@ -377,51 +315,11 @@ function getClientIp()
     return request()->getClientIp();
 }
 
-function makeSalt()
-{
-    return substr(uniqid(rand()), -6);
-}
-
-function makePassword($password, $salt)
-{
-    if (strlen($password) == 32) {
-        return md5($password . $salt);
-    }
-
-    return md5(md5($password) . $salt);
-}
-
-function isEmail($input)
-{
-    return preg_match('/(^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+)|(^$)/', $input) ? true : false;
-}
-
 // 判断两个时间段是否有重叠
 // https://jjyy.de/post/judge-two-date-range-is-overlap.html
 function timeIsOverlap($timeAStart, $timeAEnd, $timeBStart, $timeBEnd)
 {
     return !($timeAEnd < $timeBStart || $timeBEnd < $timeAStart);
-}
-
-/**
- * 文章的分享内容
- * @param $str
- * @param $length
- * User: Howard
- * Date: 2016-10-19
- * @return mixed|string
- */
-function getShareContent($str, $length = 0)
-{
-    $str = html_entity_decode(strip_tags($str));
-    $str = str_replace(PHP_EOL, '', $str);
-    if (empty($length)) {
-        $str = mb_substr($str, 0, 80, 'utf-8') . "...";
-    }
-    $strArray = array(" ", "　", "\t", "\n", "\r", "&hellip;", "&mdash;");
-    $str = str_replace($strArray, '', $str);
-    $str = str_replace("'", '"', $str);
-    return $str;
 }
 
 /**
