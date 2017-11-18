@@ -48,7 +48,7 @@
                                         <td width="6%">{{$item->id}}</td>
                                         <td width="30%">{{$item->title}}</td>
                                         <td>@if(isset($item->user)){{$item->user->name}}@endif</td>
-                                        <td width="20%">{{$item->forum->name}}</td>
+                                        <td width="20%">@if(isset($item->forum)){{$item->forum->name}}@endif</td>
                                         <td>{{$item->created_at->diffForHumans()}}</td>
                                         <td>{{$item->updated_at->diffForHumans()}}</td>
                                         <td>

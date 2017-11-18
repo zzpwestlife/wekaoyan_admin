@@ -44,7 +44,7 @@
                                 @foreach($answers as $item)
                                     <tr>
                                         <td width="6%">{{$item->id}}</td>
-                                        <td width="8%">{{$item->user->name}}</td>
+                                        <td width="8%">@if(isset($item->user)){{$item->user->name}}@endif</td>
                                         <td style="width: 50%">{{$item->content}}</td>
                                         <td width="12%">{{$item->created_at->diffForHumans()}}</td>
                                         <td width="12%">{{$item->updated_at->diffForHumans()}}</td>

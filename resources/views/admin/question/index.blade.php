@@ -50,7 +50,7 @@
                                         <td width="15%">{{$item->title}}</td>
                                         <td width="20%">{{$item->short_content}}</td>
                                         <td>@if(isset($item->user)){{$item->user->name}}@endif</td>
-                                        <td width="20%">{{$item->forum->name}}</td>
+                                        <td width="20%">@if(isset($item->forum)){{$item->forum->name}}@endif</td>
                                         <td>{{$item->created_at->diffForHumans()}}</td>
                                         <td>{{$item->updated_at->diffForHumans()}}</td>
                                         <td>

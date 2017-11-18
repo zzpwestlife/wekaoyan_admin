@@ -52,7 +52,7 @@
                                 @foreach($shuoshuoComments as $item)
                                     <tr>
                                         <td width="6%">{{$item->id}}</td>
-                                        <td>{{$item->user->name}}</td>
+                                        <td>@if(isset($item->user)){{$item->user->name}}@endif</td>
                                         <td>{{$item->content}}</td>
                                         <td>{{$item->created_at->diffForHumans()}}</td>
                                         <td>{{$item->updated_at->diffForHumans()}}</td>
