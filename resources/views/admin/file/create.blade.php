@@ -16,17 +16,17 @@
                         <h3 class="box-title">@if(isset($file))编辑文件@else增加文件@endif</h3>
                     </div>
                     <!-- /.box-header -->
-                    {{--文件上传--}}
-                    {{--<form action="/admin/files/upload" class="dropzone" id="file">--}}
-                    {{--<div class="dz-message">点击此处或拖拽文件到此处</div>--}}
-                    {{--</form>--}}
-                    <div class="dropzone dz-clickable" id="myDrop">
-                        <div class="dz-default dz-message" data-dz-message="">
-                            <span style="font-size: large">点击此处或拖拽文件到此处（一个文件）</span>
+                    @if(isset($file) && !empty($file->uri))
+                        {{--NOTHING--}}
+                    @else
+                        <div class="dropzone dz-clickable" id="myDrop">
+                            <div class="dz-default dz-message" data-dz-message="">
+                                <span style="font-size: large">点击此处或拖拽文件到此处（一个文件）</span>
+                            </div>
                         </div>
-                    </div>
+                @endif
 
-                    <!-- form start -->
+                <!-- form start -->
                     <form role="form" action="/admin/files/store" method="POST" id="form-item">
                         {{csrf_field()}}
                         <div class="box-body">
@@ -88,8 +88,8 @@
                                            value="@if(!empty($file)){{$file->filename}}@endif">
                                     <input type="hidden" class="form-control" name="path" id="path"
                                            value="@if(!empty($file)){{$file->path}}@endif">
-                                    <input type="hidden" class="form-control" name="url" id="url"
-                                           value="@if(!empty($file)){{$file->url}}@endif">
+                                    <input type="hidden" class="form-control" name="uri" id="uri"
+                                           value="@if(!empty($file)){{$file->uri}}@endif">
                                     <input type="hidden" class="form-control" name="hash" id="hash"
                                            value="@if(!empty($file)){{$file->hash}}@endif">
                                 </div>
@@ -139,11 +139,12 @@
             $("#form-item").validate();
             $(".select2").select2({language: "zh-CN"});
             $("div.switch input[type=\"checkbox\"]").not("[data-switch-no-init]").bootstrapSwitch();
+            var fileMaxSize = 20; // MB
 
             var myDropzone = new Dropzone("div#myDrop", {
                 url: "/admin/files/upload",
                 paramName: "file", // The name that will be used to transfer the file
-                maxFilesize: 20, // MB
+                maxFilesize: fileMaxSize, // MB
                 maxFiles: 1, // 一个一个来
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -151,30 +152,53 @@
             });
 
             myDropzone.on('addedfile', function (file) {
-                if (file.size > 1024 * 1024 * 20) {
-                    alert('文件大小不能超过20M');
+                if (file.size > 1024 * 1024 * fileMaxSize) {
+                    alert('文件大小不能超过 ' + fileMaxSize + 'M');
+                    myDropzone.removeFile(file);
                 }
-//                file.previewElement.addEventListener("click", function () {
-//                    myDropzone.removeFile(file);
-//                });
+                file.previewElement.addEventListener("click", function () {
+//                    var filename = $(this).find('.dz-filename')[0].innerText;
+//                    console.log(file);
+                    var path = $('#path').val();
+                    var filename = $('#filename').val();
+                    if (window.confirm('你确定要删除 ' + file.name + ' 吗？')) {
+                        $.ajax({
+                            type: "GET",
+                            url: "/admin/files/delete",
+                            data: {path: path},
+                            dataType: "JSON",
+                            success: function (data) {
+//                                console.log(data);
+                                if (0 == data.error) {
+                                    myDropzone.removeFile(file);
+                                } else {
+                                    alert('删除失败，稍后重试');
+                                }
+                            }
+                        });
+                    } else {
+                        return false;
+                    }
+                });
             });
 
             myDropzone.on('success', function (file, response) {
-                console.log(file);
-                console.log(response);
+//                console.log(file);
+//                console.log(response);
                 if (response.errno == 0) {
 //                    alert('文件上传成功');
                     $('#filename').attr('value', response.data['filename']);
                     $('#path').attr('value', response.data['path']);
-                    $('#url').attr('value', response.data['url']);
-                    $('#hash').attr('value', response.data['hash']);
+                    $('#uri').attr('value', response.data['uri']);
+                    $('#hash').attr('value', response.data['file_hash']);
                 } else {
                     alert(response.msg);
+                    myDropzone.removeFile(file);
                 }
             });
 
             myDropzone.on('error', function (file, errorMessage) {
-                console.log(errorMessage);
+//                console.log(errorMessage);
             });
             myDropzone.on('removefile', function (file) {
                 alert('remove file');

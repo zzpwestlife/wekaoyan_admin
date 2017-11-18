@@ -63,7 +63,7 @@ class FileController extends Controller
     {
         $id = request('id');
         $this->validate($request, [
-            'filename' => 'required|min:4|max:30',
+            'filename' => 'required|min:4|max:100',
             'forum_id' => 'required|min:1',
             'user_id' => 'required|min:1'
         ]);
@@ -73,6 +73,9 @@ class FileController extends Controller
         $userId = intval($request->input('user_id', 0));
         $filename = trim($request->input('filename', ''));
         $downloads = intval($request->input('downloads', 0));
+        $path = trim($request->input('path', ''));
+        $uri = trim($request->input('uri', ''));
+        $hash = trim($request->input('hash', ''));
 
         $data = [
             'type' => $type,
@@ -80,7 +83,10 @@ class FileController extends Controller
             'user_id' => $userId,
             'filename' => $filename,
             'downloads' => $downloads,
-            'status' => File::STATUS_VALID
+            'status' => File::STATUS_VALID,
+            'path' => $path,
+            'uri' => $uri,
+            'hash' => $hash,
         ];
 
         if (empty($id)) {
@@ -100,19 +106,37 @@ class FileController extends Controller
      */
     public function delete(Request $request)
     {
-
-        $id = $request->input('id', 0);
-        if (empty($id)) {
-            $returnData = [
-                'error' => 1,
-                'msg' => '文件 id 不能为空'
-            ];
-        } else {
-            File::destroy($id);
-            $returnData = [
-                'error' => 0,
-                'msg' => ''
-            ];
+        if ($request->isMethod('get')) {
+            $path = $request->input('path');
+            if (!unlink($path)) {
+                $returnData = [
+                    'error' => 1,
+                    'msg' => '文件删除失败'
+                ];
+            } else {
+                $returnData = [
+                    'error' => 0,
+                    'msg' => '文件删除成功'
+                ];
+            }
+        } elseif ($request->isMethod('post')) {
+            $id = $request->input('id', 0);
+            if (empty($id)) {
+                $returnData = [
+                    'error' => 1,
+                    'msg' => '文件 id 不能为空'
+                ];
+            } else {
+                $file = File::find($id);
+                if (!empty($file->path) && is_file($file->path)) {
+                    unlink($file->path);
+                }
+                File::destroy($id);
+                $returnData = [
+                    'error' => 0,
+                    'msg' => ''
+                ];
+            }
         }
 
         return response()->json($returnData)->setCallback($request->input('callback'));

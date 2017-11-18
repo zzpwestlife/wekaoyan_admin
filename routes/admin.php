@@ -211,5 +211,15 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/files/store', '\App\Admin\Controllers\FileController@store');
     // 文件上传
     Route::post('/files/upload', '\App\Admin\Controllers\FileController@upload');
-    Route::post('/files/delete', '\App\Admin\Controllers\FileController@delete');
+    // 删除文件 带表格记录
+    Route::post('/files/delete', [
+        'as' => 'files/delete_all',
+        'uses' => '\App\Admin\Controllers\FileController@delete'
+    ]);
+    // 只删除文件 编辑页面的操作
+    Route::get('/files/delete', [
+        'as' => 'files/delete_file',
+        'uses' => '\App\Admin\Controllers\FileController@delete'
+    ]);
+
 });

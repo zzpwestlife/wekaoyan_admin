@@ -483,12 +483,11 @@ function imageUpload($file, $dirName, $isWangEditor = false)
  * @comment 上传文件 图片和文件按理应该分开
  * @param object $file
  * @param string $dirName
- * @param bool $isWangEditor
  * @return array
  * @author zzp
  * @date 2017-11-03
  */
-function fileUpload($file, $dirName, $isWangEditor = false)
+function fileUpload($file, $dirName)
 {
     $returnData = [
         'errno' => -1,
@@ -526,22 +525,18 @@ function fileUpload($file, $dirName, $isWangEditor = false)
         $fileExist = \App\File::where('hash', $fileHash)->count();
         if ($fileExist) {
             $returnData['msg'] = '该文件已存在 请选择其他文件上传';
+            $returnData['errno'] = 123;
         } else {
             // 移动文件
             $file->move($path, $newFilename);
             $returnData['errno'] = 0;
-            $fileUrl = sprintf('%s/uploads/%s/%s/', APP_URL, $dirName, \Carbon\Carbon::now()->month) . $newFilename;
-            // http://wekaoyan_admin.dev.com/posts/11/1510388528_47787.jpg
-            if ($isWangEditor) {
-                $returnData['data'] = [$fileUrl];
-            } else {
-                $returnData['data'] = [
-                    'path' => $path,
-                    'url' => $fileUrl,
-                    'filename' => $newFilename,
-                    'file_hash' => $fileHash,
-                ];
-            }
+            $fileUri = sprintf('/uploads/%s/%s/', $dirName, \Carbon\Carbon::now()->month) . $newFilename;
+            $returnData['data'] = [
+                'path' => $path . $newFilename,
+                'uri' => $fileUri,
+                'filename' => $newFilename,
+                'file_hash' => $fileHash,
+            ];
         }
     }
 

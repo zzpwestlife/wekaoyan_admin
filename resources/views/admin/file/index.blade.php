@@ -122,7 +122,7 @@
                                 dataType: "JSON",
                                 success: function (data) {
                                     console.log(data);
-                                    if (!0 != data.error) {
+                                    if (!0 == data.error) {
                                         return false;
                                     }
                                 }
