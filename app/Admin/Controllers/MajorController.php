@@ -14,9 +14,9 @@ class MajorController extends Controller
     public function index(Request $request)
     {
         $schoolId = $request->input('school_id', 0);
-        $majors = Major::whereNull('deleted_at')->with('school')->orderBy('updated_at', 'desc')->paginate();
+        $majors = Major::with('school')->orderBy('updated_at', 'desc')->paginate();
         if (!empty($schoolId)) {
-            $majors = Major::whereNull('deleted_at')->where('school_id',
+            $majors = Major::where('school_id',
                 $schoolId)->with('school')->orderBy('updated_at', 'desc')->paginate();
         }
         return view('/admin/major/index', compact('majors', 'schoolId'));
@@ -36,7 +36,7 @@ class MajorController extends Controller
         } else {
             $school = new School();
         }
-        $schools = School::whereNull('deleted_at')->orderBy('updated_at', 'desc')->get();
+        $schools = School::orderBy('updated_at', 'desc')->get();
 
         return view('admin/major/create', compact('major', 'schools', 'school'));
     }

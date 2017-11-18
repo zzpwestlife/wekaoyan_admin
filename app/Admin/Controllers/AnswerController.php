@@ -25,13 +25,7 @@ class AnswerController extends Controller
             $answers = new \stdClass();
         } else {
             $question = Question::find($questionId);
-            $answers = Answer::where(
-                'question_id',
-                $questionId
-            )->whereNull('deleted_at')->with('user')->with('question')->orderBy(
-                'updated_at',
-                'desc'
-            )->paginate();
+            $answers = Answer::where('question_id', $questionId)->with('user')->with('question')->orderBy('updated_at', 'desc')->paginate();
         }
 
         return view('/admin/answer/index', compact('question', 'answers'));
@@ -60,8 +54,8 @@ class AnswerController extends Controller
         } else {
             $answer = Answer::with('user')->with('question')->find($id);
         }
-        $users = User::whereNull('deleted_at')->orderBy('updated_at', 'desc')->get();
-        $questions = Question::whereNull('deleted_at')->orderBy('updated_at', 'desc')->get();
+        $users = User::orderBy('updated_at', 'desc')->get();
+        $questions = Question::orderBy('updated_at', 'desc')->get();
 
         return view('admin/answer/create', compact('answer', 'users', 'questions', 'question'));
     }

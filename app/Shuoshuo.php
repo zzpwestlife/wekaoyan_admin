@@ -23,6 +23,6 @@ class Shuoshuo extends Model
 
     public function getCommentCountAttribute()
     {
-        return ShuoshuoComment::whereNull('deleted_at')->where('shuoshuo_id', $this->id)->count();
+        return ShuoshuoComment::where('shuoshuo_id', $this->id)->count();
     }
 }

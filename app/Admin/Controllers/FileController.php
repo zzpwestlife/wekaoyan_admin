@@ -26,7 +26,7 @@ class FileController extends Controller
     public function index(Request $request)
     {
 //        return redirect()->guest('/admin/login');
-        $files = File::whereNull('deleted_at')->with('forum')->with('user')->orderBy('updated_at', 'desc')->paginate();
+        $files = File::with('forum')->with('user')->orderBy('updated_at', 'desc')->paginate();
         return view('/admin/file/index', compact('files'));
     }
 
@@ -46,8 +46,8 @@ class FileController extends Controller
             $file = new File();
         }
 
-        $forums = Forum::whereNull('deleted_at')->orderBy('updated_at', 'desc')->get();
-        $users = User::whereNull('deleted_at')->orderBy('updated_at', 'desc')->get();
+        $forums = Forum::orderBy('updated_at', 'desc')->get();
+        $users = User::orderBy('updated_at', 'desc')->get();
 
         $fileTypes = File::$fileTypes;
         return view('admin/file/create', compact('file', 'forums', 'users', 'courseTypes', 'fileTypes'));

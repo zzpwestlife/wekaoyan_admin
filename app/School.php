@@ -50,6 +50,6 @@ class School extends Model
 
     public function getMajorCountAttribute()
     {
-        return Major::whereNull('deleted_at')->where('school_id', $this->id)->count();
+        return Major::where('school_id', $this->id)->count();
     }
 }

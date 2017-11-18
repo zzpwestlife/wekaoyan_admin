@@ -17,7 +17,7 @@ class ShuoshuoController extends Controller
      */
     public function index()
     {
-        $shuoshuos = Shuoshuo::whereNull('deleted_at')->with('user')->with('forum')->orderBy(
+        $shuoshuos = Shuoshuo::with('user')->with('forum')->orderBy(
             'updated_at',
             'desc'
         )->paginate();
@@ -40,8 +40,8 @@ class ShuoshuoController extends Controller
         } else {
             $shuoshuo = new Shuoshuo();
         }
-        $users = User::whereNull('deleted_at')->orderBy('updated_at', 'desc')->get();
-        $forums = Forum::whereNull('deleted_at')->orderBy('updated_at', 'desc')->get();
+        $users = User::orderBy('updated_at', 'desc')->get();
+        $forums = Forum::orderBy('updated_at', 'desc')->get();
 
         return view('admin/shuoshuo/create', compact('shuoshuo', 'users', 'forums'));
     }

@@ -17,7 +17,7 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $questions = Question::whereNull('deleted_at')->with('user')->with('forum')->orderBy(
+        $questions = Question::with('user')->with('forum')->orderBy(
             'updated_at',
             'desc'
         )->paginate();
@@ -41,8 +41,8 @@ class QuestionController extends Controller
         } else {
             $question = new Question();
         }
-        $users = User::whereNull('deleted_at')->orderBy('updated_at', 'desc')->get();
-        $forums = Forum::whereNull('deleted_at')->orderBy('updated_at', 'desc')->get();
+        $users = User::orderBy('updated_at', 'desc')->get();
+        $forums = Forum::orderBy('updated_at', 'desc')->get();
 
         return view('admin/question/create', compact('question', 'users', 'forums'));
     }

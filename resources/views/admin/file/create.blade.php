@@ -101,7 +101,7 @@
 
                                 <div class="col-sm-2">
                                     <input type="number" class="form-control" name="downloads" id="downloads" min="0"
-                                           value="@if(!empty($file) && !empty($file->downloads)){{$file->downloads}}@endif">
+                                           value="@if(!empty($file) && !empty($file->downloads)){{$file->downloads}} @else 0 @endif">
                                 </div>
                             </div>
 

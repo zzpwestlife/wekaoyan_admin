@@ -29,6 +29,6 @@ class Question extends Model
 
     public function getAnswerCountAttribute()
     {
-        return Answer::whereNull('deleted_at')->where('question_id', $this->id)->count();
+        return Answer::where('question_id', $this->id)->count();
     }
 }

@@ -28,7 +28,7 @@ class ShuoshuoCommentController extends Controller
             $shuoshuoComments = ShuoshuoComment::where(
                 'shuoshuo_id',
                 $shuoshuoId
-            )->whereNull('deleted_at')->with('user')->with('shuoshuo')->orderBy(
+            )->with('user')->with('shuoshuo')->orderBy(
                 'updated_at',
                 'desc'
             )->paginate();
@@ -59,8 +59,8 @@ class ShuoshuoCommentController extends Controller
         } else {
             $shuoshuoComment = ShuoshuoComment::with('user')->with('shuoshuo')->find($id);
         }
-        $users = User::whereNull('deleted_at')->orderBy('updated_at', 'desc')->get();
-        $shuoshuos = Shuoshuo::whereNull('deleted_at')->orderBy('updated_at', 'desc')->get();
+        $users = User::orderBy('updated_at', 'desc')->get();
+        $shuoshuos = Shuoshuo::orderBy('updated_at', 'desc')->get();
 
         return view('admin/shuoshuo_comment/create', compact('shuoshuoComment', 'users', 'shuoshuos', 'shuoshuo'));
     }

@@ -17,7 +17,7 @@ class ForumController extends Controller
      */
     public function index()
     {
-        $forums = Forum::whereNull('deleted_at')->orderBy('updated_at', 'desc')->paginate();
+        $forums = Forum::orderBy('updated_at', 'desc')->paginate();
         return view('/admin/forum/index', compact('forums'));
     }
 

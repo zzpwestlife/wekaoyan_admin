@@ -11,7 +11,7 @@ class SchoolController extends Controller
 {
     public function index()
     {
-        $schools = School::whereNull('deleted_at')->orderBy('updated_at', 'desc')->paginate();
+        $schools = School::orderBy('updated_at', 'desc')->paginate();
 //        dd($schools[0]->major_count);
         return view('/admin/school/index', compact('schools'));
     }
