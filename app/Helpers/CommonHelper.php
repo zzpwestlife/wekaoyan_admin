@@ -535,6 +535,7 @@ function fileUpload($file, $dirName)
                 'path' => $path . $newFilename,
                 'uri' => $fileUri,
                 'filename' => $newFilename,
+                'original_filename' => $originalFilename,
                 'file_hash' => $fileHash,
             ];
         }

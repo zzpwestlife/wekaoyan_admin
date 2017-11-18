@@ -38,7 +38,7 @@
 
                                 <div class="col-sm-4 col-md-4 col-lg-4">
                                     <select id="user_id" name="user_id" class="form-control select2">
-                                        <option value="">请选择</option>
+                                        {{--<option value="">请选择</option>--}}
                                         @foreach($users as $key => $value)
                                             <option value="{{$value->id}}"
                                                     @if($value->id == $file->user_id) selected
@@ -54,7 +54,7 @@
 
                                 <div class="col-sm-4 col-md-4 col-lg-4">
                                     <select id="forum_id" name="forum_id" class="form-control select2">
-                                        <option value="">请选择</option>
+                                        {{--<option value="">请选择</option>--}}
                                         @foreach($forums as $key => $value)
                                             <option value="{{$value->id}}"
                                                     @if($value->id == $file->forum_id) selected
@@ -100,8 +100,8 @@
                                             class="required-field">*</span></label>
 
                                 <div class="col-sm-2">
-                                    <input type="number" class="form-control" name="downloads" id="downloads"
-                                           value="@if(!empty($file)){{$file->downloads}}@endif">
+                                    <input type="number" class="form-control" name="downloads" id="downloads" min="0"
+                                           value="@if(!empty($file) && !empty($file->downloads)){{$file->downloads}}@endif">
                                 </div>
                             </div>
 
@@ -187,7 +187,7 @@
 //                console.log(response);
                 if (response.errno == 0) {
 //                    alert('文件上传成功');
-                    $('#filename').attr('value', response.data['filename']);
+                    $('#filename').attr('value', response.data['original_filename']);
                     $('#path').attr('value', response.data['path']);
                     $('#uri').attr('value', response.data['uri']);
                     $('#hash').attr('value', response.data['file_hash']);
