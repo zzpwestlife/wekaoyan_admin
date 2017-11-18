@@ -20,7 +20,7 @@
                         <div class="box-body">
                             <input type="hidden" name="shuoshuo_id" id="shuoshuo_id" value="{{$shuoshuo->id}}">
                             <div class="form-group col-sm-12">
-                                <label for="content" class="col-sm-2 control-label">说说评论名<span
+                                <label for="content" class="col-sm-2 control-label">说说评论内容<span
                                             class="required-field">*</span></label>
 
                                 <div class="col-sm-4">
@@ -36,7 +36,7 @@
 
                                 <div class="col-sm-4 col-md-4 col-lg-4">
                                     <select id="user_id" name="user_id" class="form-control select2">
-                                        <option value="">请选择</option>
+                                        {{--<option value="">请选择</option>--}}
                                         @foreach($users as $key => $value)
                                             <option value="{{$value->id}}"
                                                     @if($value->id == $shuoshuoComment->user_id) selected

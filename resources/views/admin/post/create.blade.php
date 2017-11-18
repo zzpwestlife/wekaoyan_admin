@@ -107,8 +107,8 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             };
             editor.customConfig.uploadFileName = 'wangEditorImg';
-            // 将图片大小限制为 1M
-            editor.customConfig.uploadImgMaxSize = 1024 * 1024;
+            // 将图片大小限制为 10M
+            editor.customConfig.uploadImgMaxSize = 10 * 1024 * 1024;
             // 限制一次最多上传 5 张图片
             editor.customConfig.uploadImgMaxLength = 5;
             // 隐藏“网络图片”tab
