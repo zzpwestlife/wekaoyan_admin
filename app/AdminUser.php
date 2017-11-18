@@ -15,7 +15,8 @@ class AdminUser extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'password',
+        'name',
+        'password',
     ];
 
     /**
@@ -24,7 +25,8 @@ class AdminUser extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
     /*
@@ -32,7 +34,8 @@ class AdminUser extends Authenticatable
      */
     public function roles()
     {
-        return $this->belongsToMany(\App\AdminRole::class, 'admin_role_user', 'user_id', 'role_id')->withPivot(['user_id', 'role_id']);
+        return $this->belongsToMany(\App\AdminRole::class, 'admin_role_user', 'user_id',
+            'role_id')->withPivot(['user_id', 'role_id']);
     }
 
     /*
@@ -40,7 +43,7 @@ class AdminUser extends Authenticatable
      */
     public function isInRoles($roles)
     {
-        return !! $roles->intersect($this->roles)->count();
+        return !!$roles->intersect($this->roles)->count();
     }
 
     /*

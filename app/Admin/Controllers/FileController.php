@@ -25,6 +25,7 @@ class FileController extends Controller
      */
     public function index(Request $request)
     {
+//        return redirect()->guest('/admin/login');
         $files = File::whereNull('deleted_at')->with('forum')->with('user')->orderBy('updated_at', 'desc')->paginate();
         return view('/admin/file/index', compact('files'));
     }
