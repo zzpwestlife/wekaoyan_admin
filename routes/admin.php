@@ -152,6 +152,26 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/posts/image/upload', '\App\Admin\Controllers\PostController@imageUpload');
 
     /**
+     * 经验贴评论管理----------------------------------------------------------------------------------------------------------
+     */
+    Route::get('/post_comments', '\App\Admin\Controllers\PostCommentController@index');
+
+    // 新增界面
+    Route::get('post_comments/create', [
+        'as' => 'post_comments.create',
+        'uses' => '\App\Admin\Controllers\PostCommentController@create'
+    ]);
+
+    // 编辑界面
+    Route::get('post_comments/create/{id}', [
+        'as' => 'post_comments.update',
+        'uses' => '\App\Admin\Controllers\PostCommentController@create'
+    ]);
+
+    Route::post('/post_comments/store', '\App\Admin\Controllers\PostCommentController@store');
+    Route::post('/post_comments/delete', '\App\Admin\Controllers\PostCommentController@delete');
+
+    /**
      * 问题管理----------------------------------------------------------------------------------------------------------
      */
     Route::get('/questions', '\App\Admin\Controllers\QuestionController@index');

@@ -4,7 +4,7 @@ namespace App;
 
 class PostComment extends Model
 {
-    protected $table = "experience_commentss";
+    protected $table = "experience_comments";
 
     public function post()
     {

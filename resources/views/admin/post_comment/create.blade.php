@@ -8,25 +8,25 @@
             <div class="col-lg-10 col-xs-6">
                 <div class="box box-info">
                     <div class="box-header with-border">
-                        <h3 class="box-title">@if(isset($answer->id))编辑问题答案@else增加问题答案@endif</h3>
-                        @if(count($question)):
-                        <a href="/admin/questions/create/{{$question->id}}">{{$question->title}}</a>
+                        <h3 class="box-title">@if(isset($postComment->id))编辑经验贴评论@else增加经验贴评论@endif</h3>
+                        @if(count($post)):
+                        <a href="/admin/posts/create/{{$post->id}}">{{$post->title}}</a>
                         @endif
                     </div>
                     <!-- /.box-header -->
                     <!-- form start -->
-                    <form role="form" action="/admin/answers/store" method="POST" id="form-item">
+                    <form role="form" action="/admin/post_comments/store" method="POST" id="form-item">
                         {{csrf_field()}}
-                        <input type="hidden" name="question_id" id="question_id" value="{{$question->id}}">
                         <div class="box-body">
+                            <input type="hidden" name="post_id" id="post_id" value="{{$post->id}}">
                             <div class="form-group col-sm-12">
-                                <label for="content" class="col-sm-2 control-label">答案<span
+                                <label for="content" class="col-sm-2 control-label">经验贴评论内容<span
                                             class="required-field">*</span></label>
 
                                 <div class="col-sm-4">
-                                    <input type="hidden" value="{{$answer->id or 0}}" name="id">
+                                    <input type="hidden" value="{{$postComment->id or 0}}" name="id">
                                     <textarea rows="6" class="form-control" name="content" id="content"
-                                              minlength="4">@if(!empty($answer)){{$answer->content}}@endif</textarea>
+                                              minlength="4">@if(!empty($postComment)){{$postComment->content}}@endif</textarea>
                                 </div>
                             </div>
 
@@ -39,7 +39,7 @@
                                         {{--<option value="">请选择</option>--}}
                                         @foreach($users as $key => $value)
                                             <option value="{{$value->id}}"
-                                                    @if($value->id == $answer->user_id) selected
+                                                    @if($value->id == $postComment->user_id) selected
                                                     @endif>{{$value->name}}</option>
                                         @endforeach
                                     </select>
@@ -47,15 +47,15 @@
                             </div>
 
                             {{--<div class="form-group col-sm-12">--}}
-                            {{--<label for="question_id" class="control-label col-sm-2">选择说说<span--}}
+                            {{--<label for="post_id" class="control-label col-sm-2">选择经验贴<span--}}
                             {{--class="required-field">*</span></label>--}}
 
                             {{--<div class="col-sm-4 col-md-4 col-lg-4">--}}
-                            {{--<select id="question_id" name="question_id" class="form-control select2">--}}
+                            {{--<select id="post_id" name="post_id" class="form-control select2">--}}
                             {{--<option value="">请选择</option>--}}
-                            {{--@foreach($shuoshuos as $key => $value)--}}
+                            {{--@foreach($posts as $key => $value)--}}
                             {{--<option value="{{$value->id}}"--}}
-                            {{--@if($value->id == $answer->question_id) selected--}}
+                            {{--@if($value->id == $postComment->post_id) selected--}}
                             {{--@endif>{{$value->content}}</option>--}}
                             {{--@endforeach--}}
                             {{--</select>--}}
@@ -66,8 +66,7 @@
                         <!-- /.box-body -->
                         @include("admin.layout.error")
                         <div class="box-footer" style="margin-left: 168px;">
-                            <a class="btn btn-icon btn-default m-b-5"
-                               href="/admin/answers?question_id={{$question->id}}"
+                            <a class="btn btn-icon btn-default m-b-5" href="/admin/post_comments?post_id={{$post->id}}"
                                title="取消">取消
                             </a>
                             &emsp;

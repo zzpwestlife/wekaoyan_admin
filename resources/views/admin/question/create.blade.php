@@ -26,7 +26,7 @@
 
                                 <div class="col-sm-4 col-md-4 col-lg-4">
                                     <select id="forum_id" name="forum_id" class="form-control select2">
-                                        <option value="">请选择</option>
+                                        {{--<option value="">请选择</option>--}}
                                         @foreach($forums as $key => $value)
                                             <option value="{{$value->id}}"
                                                     @if($value->id == $question->forum_id) selected
@@ -42,7 +42,7 @@
 
                                 <div class="col-sm-4 col-md-4 col-lg-4">
                                     <select id="user_id" name="user_id" class="form-control select2">
-                                        <option value="">请选择</option>
+                                        {{--<option value="">请选择</option>--}}
                                         @foreach($users as $key => $value)
                                             <option value="{{$value->id}}"
                                                     @if($value->id == $question->user_id) selected

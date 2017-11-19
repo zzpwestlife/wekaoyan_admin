@@ -14,8 +14,15 @@
 @section("content")
     <div class="box">
         <div class="box-header">
-            <h3 class="box-title">问题管理</h3>
-            <a type="button" class="btn" href="{{"/admin/questions/create"}}">增加问题</a>
+            <h3 class="box-title">
+                经验贴评论管理
+                @if(count($post)):
+                <a href="/admin/posts/create/{{$post->id}}">{{$post->title}}</a>
+                <a type="button" class="btn"
+                   href="{{"/admin/post_comments/create?post_id=".$post->id}}">增加经验贴评论</a>
+                @endif
+            </h3>
+
         </div>
         <!-- /.box-header -->
         <div class="box-body">
@@ -31,10 +38,8 @@
                             <thead>
                             <tr role="row">
                                 <th style="width: 10px">#</th>
-                                <th>标题</th>
-                                <th>问题内容</th>
                                 <th>发表用户</th>
-                                <th>所在论坛</th>
+                                <th>评论内容</th>
                                 <th>添加时间</th>
                                 <th>修改时间</th>
                                 <th>操作</th>
@@ -43,45 +48,27 @@
                             <tbody>
 
 
-                            @if (count($questions) > 0)
-                                @foreach($questions as $item)
+                            @if (count($postComments) > 0)
+                                @foreach($postComments as $item)
                                     <tr>
                                         <td width="6%">{{$item->id}}</td>
-                                        <td width="15%">{{$item->title}}</td>
-                                        <td width="20%">{{$item->short_content}}</td>
                                         <td>@if(isset($item->user)){{$item->user->name}}@endif</td>
-                                        <td width="20%">@if(isset($item->forum)){{$item->forum->name}}@endif</td>
+                                        <td>{{$item->content}}</td>
                                         <td>{{$item->created_at->diffForHumans()}}</td>
                                         <td>{{$item->updated_at->diffForHumans()}}</td>
                                         <td>
                                             <a class="btn btn-icon btn-default" data-toggle="tooltip"
-                                               href="{{"/admin/questions/create/".$item->id}}"
+                                               href="{{"/admin/post_comments/create/".$item->id.'?post_id='.$post->id}}"
                                                title="编辑">
                                                 <i class="fa fa-edit"></i>
                                             </a>
 
-                                            <a class="btn btn-icon btn-success" data-toggle="tooltip"
-                                               href="{{"/admin/answers/create?question_id=".$item->id}}"
-                                               title="添加答案">
-                                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                            <a class="btn btn-icon btn-danger btn-delete"
+                                               data-toggle="tooltip"
+                                               href="javascript:;" title="删除" data-operate-type="delete"
+                                               data-item-id="{{$item->id}}" data-item-content="{{$item->content}}">
+                                                <i class="fa fa-trash"></i>
                                             </a>
-
-                                            @if ($item->answer_count > 0)
-                                                <a class="btn btn-icon btn-info"
-                                                   data-toggle="tooltip"
-                                                   href="{{"/admin/answers?question_id=".$item->id}}"
-                                                   title="问题答案管理">
-                                                    <i class="fa fa-list-ol"></i>
-                                                </a>
-                                            @else
-                                                <a class="btn btn-icon btn-danger btn-delete"
-                                                   data-toggle="tooltip"
-                                                   href="javascript:;" title="删除" data-operate-type="delete"
-                                                   data-item-id="{{$item->id}}" data-item-title="{{$item->title}}">
-                                                    <i class="fa fa-trash"></i>
-                                                </a>
-                                            @endif
-
                                         </td>
                                     </tr>
                                 @endforeach
@@ -104,7 +91,7 @@
                     {{--显示第1-20行，共444行--}}
                     {{--</div>--}}
                     <div class="col-sm-12">
-                        {{$questions->links()}}
+                        {{$postComments->links()}}
                     </div>
                 </div>
             </div>
@@ -124,11 +111,11 @@
 
                     $('.btn-delete').click(function () {
                         var itemId = $(this).attr("data-item-id");
-                        var itemName = $(this).attr("data-item-title");
+                        var itemName = $(this).attr("data-item-content");
                         if (window.confirm('你确定要删除 ' + itemName + ' 吗？')) {
                             $.ajax({
                                 type: "POST",
-                                url: "/admin/questions/delete",
+                                url: "/admin/post_comments/delete",
                                 data: {id: itemId},
                                 dataType: "JSON",
                                 success: function (data) {

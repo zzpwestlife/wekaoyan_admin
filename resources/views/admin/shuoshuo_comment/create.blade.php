@@ -66,7 +66,7 @@
                         <!-- /.box-body -->
                         @include("admin.layout.error")
                         <div class="box-footer" style="margin-left: 168px;">
-                            <a class="btn btn-icon btn-default m-b-5" href="/admin/shuoshuo_comments"
+                            <a class="btn btn-icon btn-default m-b-5" href="/admin/shuoshuo_comments?shuoshuo_id={{$shuoshuo->id}}"
                                title="取消">取消
                             </a>
                             &emsp;

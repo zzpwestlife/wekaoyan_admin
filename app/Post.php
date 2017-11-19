@@ -9,7 +9,7 @@ class Post extends Model
 
     public function comments()
     {
-        return $this->hasMany('\App\PostComment', 'post_id', 'id');
+        return $this->hasMany('\App\PostComment', 'experience_id', 'id');
     }
 
     public function user()
@@ -25,5 +25,10 @@ class Post extends Model
     public function getShortContentAttribute()
     {
         return getShareContent($this->attributes['content']);
+    }
+
+    public function getCommentCountAttribute()
+    {
+        return PostComment::where('experience_id', $this->id)->count();
     }
 }

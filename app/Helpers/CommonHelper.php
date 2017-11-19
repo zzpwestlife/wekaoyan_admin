@@ -441,3 +441,16 @@ function fileUpload($file, $dirName)
 
     return $returnData;
 }
+
+function getShareContent($str, $length = 0)
+{
+    $str = html_entity_decode(strip_tags($str));
+    $str = str_replace(PHP_EOL, '', $str);
+    if (empty($length)) {
+        $str = mb_substr($str, 0, 80, 'utf-8') . "...";
+    }
+    $strArray = array(" ", "　", "\t", "\n", "\r", "&hellip;", "&mdash;");
+    $str = str_replace($strArray, '', $str);
+    $str = str_replace("'", '"', $str);
+    return $str;
+}
