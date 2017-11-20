@@ -67,7 +67,7 @@
 
                                             @if(isset($item) && !empty($item->uri))
                                                 <a class="btn btn-icon btn-default" data-toggle="tooltip"
-                                                   href="{{DATA_URL . $item->uri}}"
+                                                   href="{{DATA_URL . $item->uri}}" target="_blank"
                                                    title="下载">
                                                     <i class="fa fa-download"></i>
                                                 </a>
