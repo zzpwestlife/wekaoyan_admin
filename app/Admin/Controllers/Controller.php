@@ -2,7 +2,9 @@
 
 namespace App\Admin\Controllers;
 
+use App\AdminOperateLog;
 use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -17,6 +19,7 @@ class Controller extends BaseController
 
     public function __construct()
     {
+        $this->user = Auth::user();
         $route = request()->route();
         $uri = $route->getCompiled()->getStaticPrefix();
         $excepts = [
@@ -32,5 +35,25 @@ class Controller extends BaseController
 //                return redirect()->guest('/admin/login');
 //            }
         }
+        $this->logRequest();
+    }
+
+    /**
+     * @comment 操作日志
+     * @author zzp
+     * @date 2017-11-20
+     */
+    protected function logRequest()
+    {
+        $route = request()->route();
+        $data = [
+            'user_id' => !empty($this->user) ? $this->user->id : 0,
+            'ip' => getClientIp(),
+            'uri' => $route->getCompiled()->getStaticPrefix(),
+            'get_params' => json_encode($_GET),
+            'post_params' => json_encode($_POST),
+            'ua' => isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '',
+        ];
+        AdminOperateLog::create($data);
     }
 }
