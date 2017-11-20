@@ -65,10 +65,19 @@
                                                 <i class="fa fa-edit"></i>
                                             </a>
 
+                                            @if(isset($item) && !empty($item->uri))
+                                                <a class="btn btn-icon btn-default" data-toggle="tooltip"
+                                                   href="{{DATA_URL . $item->uri}}"
+                                                   title="下载">
+                                                    <i class="fa fa-download"></i>
+                                                </a>
+                                            @endif
+
                                             <a class="btn btn-icon btn-danger btn-delete"
                                                data-toggle="tooltip"
                                                href="javascript:;" title="删除" data-operate-type="delete"
-                                               data-item-id="{{$item->id}}" data-item-filename="{{$item->filename}}">
+                                               data-item-id="{{$item->id}}"
+                                               data-item-filename="{{$item->filename}}">
                                                 <i class="fa fa-trash"></i>
                                             </a>
                                         </td>
