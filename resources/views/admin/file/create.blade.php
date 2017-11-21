@@ -17,11 +17,17 @@
                     </div>
                     <!-- /.box-header -->
                     @if(isset($file) && !empty($file->uri))
-                        <a class="btn btn-icon btn-success" data-toggle="tooltip"
-                           href="{{DATA_URL . $item->uri}}" target="_blank"
-                           title="下载">
-                            <i class="fa fa-download"></i>
-                        </a>
+                        <div class="form-group col-sm-12">
+                            <label for="forum_id" class="control-label col-sm-2">点击下载：</label>
+
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <a class="btn btn-icon btn-success" data-toggle="tooltip"
+                                   href="{{DATA_URL . $file->uri}}" target="_blank"
+                                   title="下载">
+                                    <i class="fa fa-download"></i>
+                                </a>
+                            </div>
+                        </div>
                     @else
                         <div class="dropzone dz-clickable" id="myDrop">
                             <div class="dz-default dz-message" data-dz-message="">
