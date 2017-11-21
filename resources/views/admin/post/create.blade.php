@@ -64,7 +64,18 @@
                             </div>
 
                             <div class="form-group  col-sm-12">
-                                <label for="editor" class="col-sm-2 control-label">帖子内容<span
+                                <label for="editor" class="col-sm-2 control-label">内容预览<span
+                                            class="required-field">*</span></label>
+
+                                <div class="col-sm-10">
+                                    <p>
+                                        @if(!empty($post)){!! $post->content !!}@endif
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group  col-sm-12">
+                                <label for="editor" class="col-sm-2 control-label">内容编辑<span
                                             class="required-field">*</span></label>
 
                                 <div class="col-sm-10">
@@ -75,7 +86,6 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                         <!-- /.box-body -->
                         @include("admin.layout.error")
