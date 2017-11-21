@@ -17,7 +17,11 @@
                     </div>
                     <!-- /.box-header -->
                     @if(isset($file) && !empty($file->uri))
-                        {{--NOTHING--}}
+                        <a class="btn btn-icon btn-success" data-toggle="tooltip"
+                           href="{{DATA_URL . $item->uri}}" target="_blank"
+                           title="下载">
+                            <i class="fa fa-download"></i>
+                        </a>
                     @else
                         <div class="dropzone dz-clickable" id="myDrop">
                             <div class="dz-default dz-message" data-dz-message="">
