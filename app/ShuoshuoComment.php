@@ -15,4 +15,9 @@ class ShuoshuoComment extends Model
     {
         return $this->hasOne('\App\User', 'id', 'user_id');
     }
+
+    public function getSubCommentCountAttribute()
+    {
+        return ShuoshuoComment::where('parent_id', $this->id)->count();
+    }
 }

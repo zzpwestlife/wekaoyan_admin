@@ -33,6 +33,7 @@ class ShuoshuoCommentController extends Controller
                 'desc'
             )->paginate();
         }
+
         return view('/admin/shuoshuo_comment/index', compact('shuoshuo', 'shuoshuoComments'));
     }
 

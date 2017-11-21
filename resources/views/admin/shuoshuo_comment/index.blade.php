@@ -63,12 +63,21 @@
                                                 <i class="fa fa-edit"></i>
                                             </a>
 
-                                            <a class="btn btn-icon btn-danger btn-delete"
-                                               data-toggle="tooltip"
-                                               href="javascript:;" title="删除" data-operate-type="delete"
-                                               data-item-id="{{$item->id}}" data-item-content="{{$item->content}}">
-                                                <i class="fa fa-trash"></i>
-                                            </a>
+                                            @if ($item->sub_comment_count > 0)
+                                                {{--<a class="btn btn-icon btn-info"--}}
+                                                   {{--data-toggle="tooltip"--}}
+                                                   {{--href="#"--}}
+                                                   {{--title="次级评论管理">--}}
+                                                    {{--<i class="fa fa-list-ol"></i>--}}
+                                                {{--</a>--}}
+                                            @else
+                                                <a class="btn btn-icon btn-danger btn-delete"
+                                                   data-toggle="tooltip"
+                                                   href="javascript:;" title="删除" data-operate-type="delete"
+                                                   data-item-id="{{$item->id}}" data-item-content="{{$item->content}}">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach
