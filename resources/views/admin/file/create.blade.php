@@ -17,7 +17,7 @@
                     </div>
                     <!-- /.box-header -->
                     @if(isset($file) && !empty($file->uri))
-                        <div class="form-group col-sm-12">
+                        <div class="form-group col-sm-12" style="margin-top: 20px;">
                             <label for="forum_id" class="control-label col-sm-2">点击下载：</label>
 
                             <div class="col-sm-4 col-md-4 col-lg-4">
