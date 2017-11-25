@@ -15,6 +15,7 @@ return [
     |
     */
 
-    'driver' => 'imagick'
+    'driver' => 'imagick',
+    'max_width' => 768
 
 ];

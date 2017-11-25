@@ -151,76 +151,77 @@ function saveImage($file_field, $save_path, $save_url, $dest_file_name = "", $fl
 
 /**
  * 生成图片缩略图
- * @param $srcpath 原图片完整路径（包括文件名）
- * @param $topath 缩略图完整路径（包括文件名）
- * @param $maxwidth 最大宽度
- * @param $maxheight 最大高度
+ * @param $srcPath 原图片完整路径（包括文件名）
+ * @param $toPath 缩略图完整路径（包括文件名）
+ * @param $maxWidth 最大宽度
+ * @param $maxHeight 最大高度
+ * @param $quality
  * 原图宽高小于最大宽高时，不进行缩略图生成，直接copy原图。
  */
-function createThumb($srcpath, $topath, $maxwidth, $maxheight)
+function createThumb($srcPath, $toPath, $maxWidth, $maxHeight, $quality = 75)
 {
-    if (!file_exists($srcpath)) {
+    if (!file_exists($srcPath)) {
         return false;
     }
-    $data = getimagesize($srcpath);
+    $data = getimagesize($srcPath);
     $img = null;
     switch ($data[2]) {
         case 1:
             if (function_exists("imagecreatefromgif")) {
-                $img = imagecreatefromgif($srcpath);
+                $img = imagecreatefromgif($srcPath);
             }
             break;
         case 2:
             if (function_exists("imagecreatefromjpeg")) {
-                $img = imagecreatefromjpeg($srcpath);
+                $img = imagecreatefromjpeg($srcPath);
             }
             break;
         case 3:
             if (function_exists("imagecreatefrompng")) {
-                $img = imagecreatefrompng($srcpath);
+                $img = imagecreatefrompng($srcPath);
             }
             break;
     }
     if (!$img) {
         return false;
     }
-    $srcw = imagesx($img);
-    $srch = imagesy($img);
-    if (($maxwidth > 0 && $srcw > $maxwidth) || ($maxheight > 0 && $srch > $maxheight)) {
-        $towidth = $srcw;
-        $toheight = $srch;
-        if ($maxwidth > 0 && ($maxheight == 0 || $srcw / $srch >= $maxwidth / $maxheight)) {
-            $towidth = $maxwidth;
-            $toheight = $maxwidth * $srch / $srcw;
-        } elseif ($maxheight > 0 && ($maxwidth == 0 || $srcw / $srch <= $maxwidth / $maxheight)) {
-            $toheight = $maxheight;
-            $towidth = $maxheight * $srcw / $srch;
+    $srcW = imagesx($img);
+    $srcH = imagesy($img);
+    if (($maxWidth > 0 && $srcW > $maxWidth) || ($maxHeight > 0 && $srcH > $maxHeight)) {
+        $toWidth = $srcW;
+        $toHeight = $srcH;
+        if ($maxWidth > 0 && ($maxHeight == 0 || $srcW / $srcH >= $maxWidth / $maxHeight)) {
+            $toWidth = $maxWidth;
+            $toHeight = $maxWidth * $srcH / $srcW;
+        } elseif ($maxHeight > 0 && ($maxWidth == 0 || $srcW / $srcH <= $maxWidth / $maxHeight)) {
+            $toHeight = $maxHeight;
+            $toWidth = $maxHeight * $srcW / $srcH;
         }
-        if (function_exists("imagecreatetruecolor") && function_exists("imagecopyresampled") && @$imgthumb = imagecreatetruecolor(
-                $towidth,
-                $toheight
+        if (function_exists("imagecreatetruecolor") && function_exists("imagecopyresampled") && @$imgThumb = imagecreatetruecolor(
+                $toWidth,
+                $toHeight
             )
         ) {
-            imagecopyresampled($imgthumb, $img, 0, 0, 0, 0, $towidth, $toheight, $srcw, $srch);
-        } elseif (function_exists("imagecreate") && function_exists("imagecopyresized") && @$imgthumb = imagecreate(
-                $towidth,
-                $toheight
+            imagecopyresampled($imgThumb, $img, 0, 0, 0, 0, $toWidth, $toHeight, $srcW, $srcH);
+        } elseif (function_exists("imagecreate") && function_exists("imagecopyresized") && @$imgThumb = imagecreate(
+                $toWidth,
+                $toHeight
             )
         ) {
-            imagecopyresized($imgthumb, $img, 0, 0, 0, 0, $towidth, $toheight, $srcw, $srch);
+            imagecopyresized($imgThumb, $img, 0, 0, 0, 0, $toWidth, $toHeight, $srcW, $srcH);
         } else {
             return false;
         }
         if (function_exists('imagejpeg')) {
-            imagejpeg($imgthumb, $topath, 50);
+            imagejpeg($imgThumb, $toPath, $quality);
         } elseif (function_exists('imagepng')) {
-            imagepng($imgthumb, $topath);
+            imagepng($imgThumb, $toPath, $quality);
         }
     } else {
-        copy($srcpath, $topath);
+        copy($srcPath, $toPath);
     }
     imagedestroy($img);
-    if (!file_exists($topath)) {
+    if (!file_exists($toPath)) {
         return false;
     }
     return true;
@@ -361,12 +362,19 @@ function imageUpload($file, $dirName, $isWangEditor = false)
         $returnData['msg'] = $file->getErrorMessage();
     } else {
         $fileExt = $file->getClientOriginalExtension();
-        // 新文件名
+        // 新图片名
         $newFilename = sprintf('%s_%s.%s', time(), rand(10000, 99999), $fileExt);
-        // 移动文件
-        $file->move($path, $newFilename);
-        $returnData['errno'] = 0;
+        $filePath = sprintf('%s/uploads/%s/%s/', DATA_ROOT, $dirName, $yearMonth) . $newFilename;
         $fileUrl = sprintf('%s/uploads/%s/%s/', DATA_URL, $dirName, $yearMonth) . $newFilename;
+        $file->move($path, $newFilename);
+        // 压缩图片
+        list($pictureWidth, $pictureHeight) = getimagesize($filePath);
+        $maxWidth = config('image.max_width');
+        if ($pictureWidth > $maxWidth) {
+            createthumb($filePath, $filePath, $maxWidth, $pictureWidth / 500 * $pictureHeight);
+        }
+
+        $returnData['errno'] = 0;
         // http://wekaoyan_admin.dev.com/posts/11/1510388528_47787.jpg
         if ($isWangEditor) {
             $returnData['data'] = [$fileUrl];
