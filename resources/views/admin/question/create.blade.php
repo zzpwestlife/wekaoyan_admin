@@ -56,15 +56,21 @@
                                 <label for="title" class="col-sm-2 control-label">标题<span
                                             class="required-field">*</span></label>
 
-                                <div class="col-sm-4">
-                                    <input type="hidden" value="{{$question->id or 0}}" name="id" id="id">
-                                    <input type="text" class="form-control" name="title" id="title" minlength="4"
-                                           required
-                                           value="@if(!empty($question)){{$question->title}}@endif" placeholder="请输入标题">
+                                {{--<div class="col-sm-4">--}}
+                                {{--<input type="hidden" value="{{$question->id or 0}}" name="id" id="id">--}}
+                                {{--<input type="text" class="form-control" name="title" id="title" minlength="4"--}}
+                                {{--required--}}
+                                {{--value="@if(!empty($question)){{$question->title}}@endif" placeholder="请输入标题">--}}
+                                {{--</div>--}}
+
+                                <div class="col-sm-10">
+                                    <input type="hidden" value="{{$question->id or 0}}" name="id">
+                                    <textarea rows="5" class="form-control" name="title" id="title" minlength="1"
+                                              required>@if(!empty($question)){{$question->title}}@endif</textarea>
                                 </div>
                             </div>
 
-                            <div class="form-group col-sm-12">
+                            <div class="form-group col-sm-12" style="display: none;">
                                 <label for="editor" class="col-sm-2 control-label">问题内容<span
                                             class="required-field">*</span></label>
 

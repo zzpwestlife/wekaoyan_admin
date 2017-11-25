@@ -58,7 +58,7 @@ class QuestionController extends Controller
     {
         $id = intval($request->input('id', 0));
         $title = trim($request->input('title', ''));
-        $content = trim($request->input('content', ''));
+        $content = trim($request->input('content', '12345'));
         $user_id = intval($request->input('user_id', 0));
         $forum_id = intval($request->input('forum_id', 0));
         $this->validate($request, [
