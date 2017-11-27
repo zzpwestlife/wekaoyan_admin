@@ -21,11 +21,8 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'mobile' => $faker->phoneNumber,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
-        'major_id' => function () {
-            return factory(\App\Major::class)->create()->id;
-        },
-        'school_name' => function () {
-            return factory(\App\School::class)->create()->name;
+        'forum_id' => function () {
+            return factory(\App\Forum::class)->create()->id;
         },
     ];
 });
@@ -40,22 +37,10 @@ $factory->define(App\Post::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\School::class, function (Faker\Generator $faker) {
-    $provinces = array_keys(\App\School::$provinces);
-    return [
-//        'name' => $faker->unique()->city . '大学',
-        'name' => $faker->unique()->city,
-        'province' => $provinces[rand(0, count($provinces) - 1)],
-    ];
-});
 
-$factory->define(App\Major::class, function (Faker\Generator $faker) {
+$factory->define(App\Forum::class, function (Faker\Generator $faker) {
     return [
-        'school_id' => function () {
-            return factory(\App\School::class)->create()->id;
-        },
-        'name' => $faker->name . '工程',
-        'department' => $faker->name . '学院',
+        'name' => $faker->name,
     ];
 });
 
@@ -64,8 +49,8 @@ $factory->define(App\Shuoshuo::class, function (Faker\Generator $faker) {
         'user_id' => function () {
             return factory(\App\User::class)->create()->id;
         },
-        'major_id' => function () {
-            return factory(\App\Major::class)->create()->id;
+        'forum_id' => function () {
+            return factory(\App\Forum::class)->create()->id;
         },
         'content' => $faker->sentence(50, true),
     ];
@@ -90,8 +75,8 @@ $factory->define(App\File::class, function (Faker\Generator $faker) {
         'user_id' => function () {
             return factory(\App\User::class)->create()->id;
         },
-        'major_id' => function () {
-            return factory(\App\Major::class)->create()->id;
+        'forum_id' => function () {
+            return factory(\App\Forum::class)->create()->id;
         },
         'filename' => $faker->name . $suffix[rand(0, count($suffix) - 1)],
         'type' => $faker->numberBetween(0, 1),

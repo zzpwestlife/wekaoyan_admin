@@ -31,7 +31,7 @@
                     @else
                         <div class="dropzone dz-clickable" id="myDrop">
                             <div class="dz-default dz-message" data-dz-message="">
-                                <span style="font-size: large">点击此处或拖拽文件到此处（一个文件）</span>
+                                <span style="font-size: large">点击此处或拖拽文件到此处</span>
                             </div>
                         </div>
                 @endif
@@ -89,22 +89,19 @@
                                 </div>
                             </div>
 
-                            <div class="form-group col-sm-12">
-                                <label for="filename" class="col-sm-2 control-label">文件名<span
-                                            class="required-field">*</span></label>
+                            @if(!isset($file))
+                                <div class="form-group col-sm-12">
+                                    <label for="filename" class="col-sm-2 control-label">文件名<span
+                                                class="required-field">*</span></label>
 
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control" name="filename" id="filename"
-                                           value="@if(!empty($file)){{$file->filename}}@endif">
-                                    <input type="hidden" class="form-control" name="path" id="path"
-                                           value="@if(!empty($file)){{$file->path}}@endif">
-                                    <input type="hidden" class="form-control" name="uri" id="uri"
-                                           value="@if(!empty($file)){{$file->uri}}@endif">
-                                    <input type="hidden" class="form-control" name="hash" id="hash"
-                                           value="@if(!empty($file)){{$file->hash}}@endif">
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" name="filename" id="filename"
+                                               value="@if(!empty($file)){{$file->filename}}@endif">
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
 
+                            <div id="files" style="display: none;"></div>
                             <div class="form-group col-sm-12">
                                 <label for="downloads" class="col-sm-2 control-label">下载量<span
                                             class="required-field">*</span></label>
@@ -155,7 +152,7 @@
                 url: "/admin/files/upload",
                 paramName: "file", // The name that will be used to transfer the file
                 maxFilesize: fileMaxSize, // MB
-                maxFiles: 1, // 一个一个来
+                maxFiles: 20,
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
@@ -167,15 +164,14 @@
                     myDropzone.removeFile(file);
                 }
                 file.previewElement.addEventListener("click", function () {
-//                    var filename = $(this).find('.dz-filename')[0].innerText;
 //                    console.log(file);
-                    var path = $('#path').val();
-                    var filename = $('#filename').val();
                     if (window.confirm('你确定要删除 ' + file.name + ' 吗？')) {
+                        var fileInfo = JSON.parse($('#' + md5(file.name)).val());
+                        $('#' + md5(file.name)).remove();
                         $.ajax({
                             type: "GET",
                             url: "/admin/files/delete",
-                            data: {path: path},
+                            data: {path: fileInfo.path},
                             dataType: "JSON",
                             success: function (data) {
 //                                console.log(data);
@@ -197,10 +193,16 @@
 //                console.log(response);
                 if (response.errno == 0) {
 //                    alert('文件上传成功');
-                    $('#filename').attr('value', response.data['original_filename']);
-                    $('#path').attr('value', response.data['path']);
-                    $('#uri').attr('value', response.data['uri']);
-                    $('#hash').attr('value', response.data['file_hash']);
+                    var fileInfo = $('#file_info').val();
+                    var fileInfoStr = {
+                        'filename': response.data['original_filename'],
+                        'path': response.data['path'],
+                        'uri': response.data['uri'],
+                        'hash': response.data['file_hash']
+                    };
+
+                    var oneFile = '<textarea name="file_info[]" id="' + md5(response.data['original_filename']) + '">' + JSON.stringify(fileInfoStr) + '</textarea>';
+                    $('#files').append(oneFile);
                 } else {
                     alert(response.msg);
                     myDropzone.removeFile(file);

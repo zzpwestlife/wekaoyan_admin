@@ -36,7 +36,7 @@
                                 <input type="checkbox" value="None" id="checkbox1" name="check"/>
                                 <label for="checkbox1"></label>
                             </div>
-                            <span class="text">Remember me</span>
+                            <span class="text">记住我</span>
                             <button type="submit" class="btn btn-default">登录</button>
                         </div>
                     </form>

@@ -64,7 +64,7 @@ class FileController extends Controller
     {
         $id = request('id');
         $this->validate($request, [
-            'filename' => 'required|min:4|max:100',
+//            'filename' => 'required|min:4|max:100',
             'forum_id' => 'required|min:1',
             'user_id' => 'required|min:1'
         ]);
@@ -74,27 +74,40 @@ class FileController extends Controller
         $userId = intval($request->input('user_id', 0));
         $filename = trim($request->input('filename', ''));
         $downloads = intval($request->input('downloads', 0));
-        $path = trim($request->input('path', ''));
-        $uri = trim($request->input('uri', ''));
-        $hash = trim($request->input('hash', ''));
-
-        $data = [
-            'type' => $type,
-            'forum_id' => $forumId,
-            'user_id' => $userId,
-            'filename' => $filename,
-            'downloads' => $downloads,
-            'status' => File::STATUS_VALID,
-            'path' => $path,
-            'uri' => $uri,
-            'hash' => $hash,
-        ];
+        $fileInfo = $request->input('file_info', []);
 
         if (empty($id)) {
-            File::create($data);
+            if (!empty($fileInfo)) {
+                foreach ($fileInfo as $item) {
+                    $oneItem = json_decode($item, true);
+                    $data = [
+                        'type' => $type,
+                        'forum_id' => $forumId,
+                        'user_id' => $userId,
+                        'filename' => $oneItem['filename'],
+                        'downloads' => $downloads,
+                        'status' => File::STATUS_VALID,
+                        'path' => $oneItem['path'],
+                        'uri' => $oneItem['uri'],
+                        'hash' => $oneItem['hash'],
+                    ];
+                    File::create($data);
+                }
+            }
         } else {
+
+            $data = [
+                'type' => $type,
+                'forum_id' => $forumId,
+                'user_id' => $userId,
+                'filename' => $filename,
+                'downloads' => $downloads,
+                'status' => File::STATUS_VALID,
+            ];
+
             File::where('id', $id)->update($data);
         }
+
         return redirect('/admin/files');
     }
 
