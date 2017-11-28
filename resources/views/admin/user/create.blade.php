@@ -78,8 +78,12 @@
                             <label for="password" class="col-sm-2 control-label">密码</label>
 
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" name="password" id="password"
-                                       placeholder="不修改则置空">
+                                @if(isset($user->id))
+                                    <input type="text" class="form-control" name="password" id="password"
+                                           placeholder="不修改则置空">
+                                @else
+                                    <input type="text" class="form-control" name="password" id="password" required>
+                                @endif
                             </div>
                         </div>
 
