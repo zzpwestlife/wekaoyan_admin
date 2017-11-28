@@ -2,75 +2,113 @@
 
 namespace App\Admin\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 
+/**
+ * @comment 这里是前端用户控制器
+ * Class UserController
+ * @package App\Admin\Controllers
+ */
 class UserController extends Controller
 {
-    /*
-     * 用户列表
+    /**
+     * @comment 说说列表
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @author zzp
+     * @date 2017-10-27
      */
     public function index()
     {
-        $users = \App\AdminUser::paginate(10);
+        $users = User::orderBy('updated_at', 'desc')->paginate();
         return view('/admin/user/index', compact('users'));
     }
 
-    /*
-     * 创建用户
+    /**
+     * @comment 新建说说
+     * @param Request $request
+     * @param int $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @author zzp
+     * @date 2017-10-27
      */
-    public function create()
+    public function create(Request $request, $id = 0)
     {
-        return view('/admin/user/add');
+        if (!empty($id)) {
+            $user = User::find($id);
+        } else {
+            $user = new User();
+        }
+        $users = User::orderBy('updated_at', 'desc')->get();
+
+        return view('admin/user/create', compact('user', 'users'));
     }
 
-    /*
-     * 创建用户
+    /**
+     * @comment 更新说说
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @author zzp
+     * @date 2017-10-27
      */
-    public function store()
+    public function store(Request $request)
     {
-        $this->validate(request(), [
-            'name' => 'required|min:3',
-            'password' => 'required'
+        $id = intval($request->input('id', 0));
+        $name = trim($request->input('name', ''));
+        $mobile = trim($request->input('mobile', ''));
+        $qq = trim($request->input('qq', ''));
+        $weixin = trim($request->input('weixin', ''));
+        $email = trim($request->input('email', ''));
+        $password = trim($request->input('password', ''));
+        $isTeacher = intval($request->input('is_teacher', 0));
+        $this->validate($request, [
+            'name' => 'required|min:1|max:20',
+            'mobile' => 'required|min:11|max:11',
         ]);
 
-        $name = request('name');
-        $password = bcrypt(request('password'));
-        \App\AdminUser::create(compact('name', 'password'));
+        $data = [
+            'name' => $name,
+            'mobile' => $mobile,
+            'qq' => $qq,
+            'weixin' => $weixin,
+            'email' => $email,
+            'is_teacher' => $isTeacher,
+        ];
+
+        if (!empty($password)) {
+            $data['password'] = bcrypt($password);
+        }
+        if (empty($id)) {
+            User::create($data);
+        } else {
+            User::where('id', $id)->update($data);
+        }
         return redirect('/admin/users');
     }
 
-    /*
-     * 角色的权限
+    /**
+     * @comment 删除说说
+     * @param Request $request
+     * @return $this
+     * @author zzp
+     * @date 2017-10-27
      */
-    public function role(\App\AdminUser $user)
+    public function delete(Request $request)
     {
-        $roles = \App\AdminRole::all();
-        $myRoles = $user->roles;
-        return view('/admin/user/role', compact('roles', 'myRoles', 'user'));
-    }
-
-    /*
-     * 保存权限
-     */
-    public function storeRole(\App\AdminUser $user)
-    {
-        $this->validate(request(),[
-            'roles' => 'required|array'
-        ]);
-
-        $roles = \App\AdminRole::find(request('roles'));
-        $myRoles = $user->roles;
-
-        // 对已经有的权限
-        $addRoles = $roles->diff($myRoles);
-        foreach ($addRoles as $role) {
-            $user->roles()->save($role);
+        $id = intval($request->input('id', 0));
+        if (empty($id)) {
+            $returnData = [
+                'error' => 1,
+                'msg' => '用户 id 不能为空'
+            ];
+        } else {
+            User::destroy($id);
+            $returnData = [
+                'error' => 0,
+                'msg' => ''
+            ];
         }
 
-        $deleteRoles = $myRoles->diff($roles);
-        foreach ($deleteRoles as $role) {
-            $user->deleteRole($role);
-        }
-        return back();
+        return response()->json($returnData)->setCallback($request->input('callback'));
     }
 }

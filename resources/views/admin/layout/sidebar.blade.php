@@ -83,6 +83,11 @@
                     <i class="fa fa-dashboard"></i> <span>文件管理</span>
                 </a>
             </li>
+            <li class="active treeview">
+                <a href="/admin/users">
+                    <i class="fa fa-dashboard"></i> <span>前端用户管理</span>
+                </a>
+            </li>
             {{--<li class="active treeview">--}}
                 {{--<a href="/admin/notices">--}}
                     {{--<i class="fa fa-dashboard"></i> <span>通知管理</span>--}}
