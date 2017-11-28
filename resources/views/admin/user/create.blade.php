@@ -92,8 +92,9 @@
 
                             <div class="col-sm-4">
                                 <div class="form-control">
-                                    <input type="radio" name="is_teacher" value="1"> 老师 &emsp;
-                                    <input type="radio" name="is_teacher" value="0" checked> 学生
+                                    <input type="radio" name="is_teacher" value="1" @if($user->is_teacher) checked @endif>
+                                    老师 &emsp;
+                                    <input type="radio" name="is_teacher" value="0"> 学生
                                 </div>
                             </div>
                         </div>
