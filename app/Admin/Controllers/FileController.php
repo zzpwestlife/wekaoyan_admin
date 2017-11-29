@@ -91,19 +91,22 @@ class FileController extends Controller
                         'uri' => $oneItem['uri'],
                         'hash' => $oneItem['hash'],
                     ];
+
                     File::create($data);
                 }
             }
         } else {
-
             $data = [
                 'type' => $type,
                 'forum_id' => $forumId,
                 'user_id' => $userId,
-                'filename' => $filename,
                 'downloads' => $downloads,
                 'status' => File::STATUS_VALID,
             ];
+
+            if (!empty($filename)) {
+                $data['filename'] = $filename;
+            }
 
             File::where('id', $id)->update($data);
         }

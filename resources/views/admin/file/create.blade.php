@@ -89,7 +89,7 @@
                                 </div>
                             </div>
 
-                            @if(!isset($file))
+                            @if(isset($file) && !empty($file->filename))
                                 <div class="form-group col-sm-12">
                                     <label for="filename" class="col-sm-2 control-label">文件名<span
                                                 class="required-field">*</span></label>
