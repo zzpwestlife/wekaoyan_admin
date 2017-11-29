@@ -3,6 +3,7 @@
 @section('add_css')
     {!! Html::style('/bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css') !!}
     {!! Html::style('/dropzone/dist/min/dropzone.min.css') !!}
+    {!! Html::style('/datetimepicker-master/build/jquery.datetimepicker.min.css') !!}
 @endsection
 
 @section("content")
@@ -112,6 +113,16 @@
                                 </div>
                             </div>
 
+                            <div class="form-group col-sm-12">
+                                <label for="updated_at" class="col-sm-2 control-label">更新时间<span
+                                            class="required-field">*</span></label>
+
+                                <div class="col-sm-4 form-group">
+                                    <input type='text' class="form-control" id="datetimepicker" name="updated_at"
+                                           placeholder="不填默认为当期时间" value="{{$file->updated_at or ''}}"/>
+                                </div>
+                            </div>
+
                         </div>
                         <!-- /.box-body -->
                         @include("admin.layout.error")
@@ -134,7 +145,9 @@
 
 @section('add_script')
     {!! Html::script('/bower_components/bootstrap-switch/dist/js/bootstrap-switch.min.js') !!}
-    <script src="/dropzone/dist/min/dropzone.min.js"></script>
+    {!! Html::script('/dropzone/dist/min/dropzone.min.js') !!}
+    {!! Html::script('/datetimepicker-master/build/jquery.datetimepicker.full.min.js') !!}
+
 @endsection
 
 @section('script')
@@ -142,6 +155,9 @@
     <script type="text/javascript">
         Dropzone.autoDiscover = false; // 这一行一定要放在ready之前
         $(document).ready(function () {
+            $.datetimepicker.setLocale('zh');
+            $('#datetimepicker').datetimepicker();
+
             $('#name').focus();
             $("#form-item").validate();
             $(".select2").select2({language: "zh-CN"});

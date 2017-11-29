@@ -69,11 +69,13 @@ class FileController extends Controller
             'user_id' => 'required|min:1'
         ]);
 
+        $now = (new Carbon())->toDateTimeString();
         $type = intval($request->input('type', 0));
         $forumId = intval($request->input('forum_id', 0));
         $userId = intval($request->input('user_id', 0));
         $filename = trim($request->input('filename', ''));
         $downloads = intval($request->input('downloads', 0));
+        $updatedAt = trim($request->input('updated_at', $now));
         $fileInfo = $request->input('file_info', []);
 
         if (empty($id)) {
@@ -86,6 +88,7 @@ class FileController extends Controller
                         'user_id' => $userId,
                         'filename' => $oneItem['filename'],
                         'downloads' => $downloads,
+                        'updated_at' => $updatedAt,
                         'status' => File::STATUS_VALID,
                         'path' => $oneItem['path'],
                         'uri' => $oneItem['uri'],
@@ -102,6 +105,7 @@ class FileController extends Controller
                 'user_id' => $userId,
                 'downloads' => $downloads,
                 'status' => File::STATUS_VALID,
+                'updated_at' => $updatedAt,
             ];
 
             if (!empty($filename)) {
