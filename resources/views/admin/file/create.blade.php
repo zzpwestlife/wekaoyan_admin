@@ -3,6 +3,7 @@
 @section('add_css')
     {!! Html::style('/bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css') !!}
     {!! Html::style('/dropzone/dist/min/dropzone.min.css') !!}
+    {{--http://xdsoft.net/jqplugins/datetimepicker/--}}
     {!! Html::style('/datetimepicker-master/build/jquery.datetimepicker.min.css') !!}
 @endsection
 
@@ -156,7 +157,10 @@
         Dropzone.autoDiscover = false; // 这一行一定要放在ready之前
         $(document).ready(function () {
             $.datetimepicker.setLocale('zh');
-            $('#datetimepicker').datetimepicker();
+            $('#datetimepicker').datetimepicker({
+                'step': 5,
+                maxDate: '+1970/01/02'//tomorrow is maximum date calendar
+            });
 
             $('#name').focus();
             $("#form-item").validate();
