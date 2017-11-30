@@ -158,7 +158,7 @@
         $(document).ready(function () {
             $.datetimepicker.setLocale('zh');
             $('#datetimepicker').datetimepicker({
-                'step': 5,
+                'step': 1,
                 maxDate: '+1970/01/02'//tomorrow is maximum date calendar
             });
 
