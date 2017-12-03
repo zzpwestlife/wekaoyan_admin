@@ -8,6 +8,7 @@ Route::group(['prefix' => 'admin'], function () {
 
     // 需要登陆的
 //    Route::group(['middleware' => 'auth:admin'], function () {
+    Route::get('/', '\App\Admin\Controllers\HomeController@index');
     Route::get('/home', '\App\Admin\Controllers\HomeController@index');
 
     // 系统管理
