@@ -57,7 +57,7 @@
                                 <label for="title" class="col-sm-2 control-label">帖子标题<span
                                             class="required-field">*</span></label>
 
-                                <div class="col-sm-4">
+                                <div class="col-sm-6">
                                     <input type="text" class="form-control" name="title" id="title"
                                            value="@if(!empty($post)){{$post->title}}@endif">
                                 </div>
