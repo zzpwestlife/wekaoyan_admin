@@ -67,8 +67,8 @@
                                 <label for="editor" class="col-sm-2 control-label">内容预览<span
                                             class="required-field">*</span></label>
 
-                                <div class="col-sm-10">
-                                    <p class="content_article">
+                                <div class="col-sm-10 content_article">
+                                    <p>
                                         @if(!empty($post)){!! $post->content !!}@endif
                                     </p>
                                 </div>
