@@ -69,7 +69,7 @@ class FileController extends Controller
             'user_id' => 'required|min:1'
         ]);
 
-        $now = (new Carbon())->timestamp;
+        $now = (new Carbon())->toDateTimeString();
         $type = intval($request->input('type', 0));
         $forumId = intval($request->input('forum_id', 0));
         $userId = intval($request->input('user_id', 0));
@@ -88,7 +88,6 @@ class FileController extends Controller
                         'user_id' => $userId,
                         'filename' => $oneItem['filename'],
                         'downloads' => $downloads,
-                        'updated_at' => $updatedAt,
                         'status' => File::STATUS_VALID,
                         'path' => $oneItem['path'],
                         'uri' => $oneItem['uri'],
