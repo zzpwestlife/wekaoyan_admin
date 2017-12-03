@@ -34,6 +34,7 @@
                                 <th>经验贴标题</th>
                                 <th>发表用户</th>
                                 <th>所在论坛</th>
+                                <th>点击量</th>
                                 <th>添加时间</th>
                                 <th>修改时间</th>
                                 <th>操作</th>
@@ -49,6 +50,7 @@
                                         <td width="30%">{{$item->title}}</td>
                                         <td>@if(isset($item->user)){{$item->user->name}}@endif</td>
                                         <td width="20%">@if(isset($item->forum)){{$item->forum->name}}@endif</td>
+                                        <td>{{$item->count}}</td>
                                         <td>{{$item->created_at->diffForHumans()}}</td>
                                         <td>{{$item->updated_at->diffForHumans()}}</td>
                                         <td>

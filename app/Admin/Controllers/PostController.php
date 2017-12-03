@@ -62,6 +62,7 @@ class PostController extends Controller
         $content = trim($request->input('content', ''));
         $user_id = intval($request->input('user_id', 0));
         $forum_id = intval($request->input('forum_id', 0));
+        $count = intval($request->input('count', 0));
         $this->validate($request, [
             'title' => 'required|min:1',
             'content' => 'required|min:4',
@@ -69,7 +70,7 @@ class PostController extends Controller
             'forum_id' => 'required|min:1',
         ]);
 
-        $data = compact('content', 'user_id', 'forum_id', 'title');
+        $data = compact('content', 'user_id', 'forum_id', 'title', 'count');
 
         if (empty($id)) {
             Post::create($data);

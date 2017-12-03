@@ -22,6 +22,16 @@
                         <div class="box-body">
 
                             <div class="form-group col-sm-12">
+                                <label for="title" class="col-sm-2 control-label">帖子标题<span
+                                            class="required-field">*</span></label>
+
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" name="title" id="title"
+                                           value="@if(!empty($post)){{$post->title}}@endif">
+                                </div>
+                            </div>
+
+                            <div class="form-group col-sm-12">
                                 <label for="forum_id" class="control-label col-sm-2">选择论坛<span
                                             class="required-field">*</span></label>
 
@@ -54,12 +64,12 @@
                             </div>
 
                             <div class="form-group col-sm-12">
-                                <label for="title" class="col-sm-2 control-label">帖子标题<span
+                                <label for="count" class="col-sm-2 control-label">阅读数<span
                                             class="required-field">*</span></label>
 
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control" name="title" id="title"
-                                           value="@if(!empty($post)){{$post->title}}@endif">
+                                <div class="col-sm-4">
+                                    <input type="number" class="form-control" name="count" id="count"
+                                           value="@if(!empty($post)){{$post->count}}@endif">
                                 </div>
                             </div>
 
@@ -171,6 +181,7 @@
                 var forumId = $('#forum_id').val();
                 var userId = $('#user_id').val();
                 var title = $('#title').val();
+                var count = $('#count').val();
                 var content = editor.txt.html();
 
                 console.log(forumId, userId, content);
@@ -190,6 +201,7 @@
                             'forum_id': forumId,
                             'user_id': userId,
                             'title': title,
+                            'count': count,
                             'content': content
                         },
                         dataType: "JSON",
