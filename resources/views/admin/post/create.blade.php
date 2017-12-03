@@ -68,7 +68,7 @@
                                             class="required-field">*</span></label>
 
                                 <div class="col-sm-10">
-                                    <p>
+                                    <p class="content-article">
                                         @if(!empty($post)){!! $post->content !!}@endif
                                     </p>
                                 </div>
@@ -107,6 +107,24 @@
 @section('script')
     <script type="text/javascript">
         $(document).ready(function () {
+            $('.content_article h1,.content_article h2,.content_article h3,.content_article h4,.content_article h5,.content_article p').css('text-align', 'justify');
+            $('.content_article h1').css('font-weight', '400');
+            $('.content_article h2').css('font-weight', '400');
+            $('.content_article h3').css('font-weight', '400');
+            $('.content_article h4').css('font-weight', '300');
+            $('.content_article h5').css('font-weight', '400');
+            $('.content_article p').css('font-weight', '400');
+            $('.content_article h1,.content_article h2,.content_article h3,.content_article h4,.content_article h5').css('font-family', 'PingFang SC');
+
+            $('.content_article h2').css('line-height', '4rem');
+            $('.content_article h3').css('line-height', '3.2rem');
+            $('.content_article h4').css('line-height', '2.8rem');
+            $('.content_article h5').css('line-height', '2rem');
+            $('.content_article p').css('line-height', '2.5rem');
+            $('.content_article p').css('font-size', '1.5rem');
+            $('.content_article h4').css('text-indent', '3.3rem');
+            $('.content_article p').css('text-indent', '3.3rem');
+
             $('#name').focus();
             $(".select2").select2({language: "zh-CN"});
 
