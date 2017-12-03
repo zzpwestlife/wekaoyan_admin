@@ -430,7 +430,8 @@ function fileUpload($file, $dirName)
         $newFilename = sprintf('%s_%s_%s.%s', $realFilename, time(), rand(10000, 99999), $fileExt);
         $fileHash = hash_file('md5', $file->getPathname());
         // 不允许重复上传相同的文件
-        $fileExist = \App\File::where('hash', $fileHash)->count();
+//        $fileExist = \App\File::where('hash', $fileHash)->count();
+        $fileExist = false;
         if ($fileExist) {
             $returnData['msg'] = '该文件已存在 请选择其他文件上传';
             $returnData['errno'] = 123;

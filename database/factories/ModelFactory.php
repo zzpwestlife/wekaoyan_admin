@@ -14,6 +14,34 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     static $password;
+    static $forumIds = [
+        48,
+        54,
+        55,
+        56,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        89
+    ];
 
     return [
         'name' => $faker->name,
@@ -21,9 +49,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'mobile' => $faker->phoneNumber,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
-        'forum_id' => function () {
-            return factory(\App\Forum::class)->create()->id;
-        },
+        'forum_id' => $forumIds[rand(0, count($forumIds) - 1)]
     ];
 });
 
