@@ -68,7 +68,7 @@
                                             class="required-field">*</span></label>
 
                                 <div class="col-sm-10">
-                                    <p class="content-article">
+                                    <p class="content_article">
                                         @if(!empty($post)){!! $post->content !!}@endif
                                     </p>
                                 </div>
