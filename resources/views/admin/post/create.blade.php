@@ -122,8 +122,7 @@
             $('.content_article h5').css('line-height', '2rem');
             $('.content_article p').css('line-height', '2.5rem');
             $('.content_article p').css('font-size', '1.5rem');
-            $('.content_article h4').css('text-indent', '3.3rem');
-            $('.content_article p').css('text-indent', '3.3rem');
+            $('.content_article p').css('margin-bottom', '1rem');
 
             $('#name').focus();
             $(".select2").select2({language: "zh-CN"});
