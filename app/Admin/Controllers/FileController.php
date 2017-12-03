@@ -69,7 +69,7 @@ class FileController extends Controller
             'user_id' => 'required|min:1'
         ]);
 
-        $now = (new Carbon())->toDateTimeString();
+        $now = (new Carbon())->timestamp;
         $type = intval($request->input('type', 0));
         $forumId = intval($request->input('forum_id', 0));
         $userId = intval($request->input('user_id', 0));

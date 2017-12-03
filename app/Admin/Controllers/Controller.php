@@ -27,6 +27,7 @@ class Controller extends BaseController
             '/admin/logout',
         ];
 
+        $this->logRequest();
         if (!in_array($uri, $excepts)) {
             $this->middleware('auth');
 
@@ -35,7 +36,6 @@ class Controller extends BaseController
 //                return redirect()->guest('/admin/login');
 //            }
         }
-        $this->logRequest();
     }
 
     /**
