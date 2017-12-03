@@ -164,6 +164,9 @@
             editor.create();
 
             $('button.btn-save').click(function () {
+                $('button.btn-save').attr('disabled', 'disabled');
+                $('button.btn-save').text('保存中...');
+
                 var id = $('#id').val();
                 var forumId = $('#forum_id').val();
                 var userId = $('#user_id').val();
@@ -199,6 +202,8 @@
                         },
                         error: function (xhr) {
                             console.log(xhr);
+                            $('button.btn-save').removeAttr('disabled');
+                            $('button.btn-save').text('确定');
                             alert("错误提示： " + xhr.status + " " + xhr.msg);
                         }
                     });
