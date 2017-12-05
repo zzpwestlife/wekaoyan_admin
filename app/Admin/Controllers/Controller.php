@@ -20,9 +20,6 @@ class Controller extends BaseController
     {
         $this->user = Auth::user();
         $this->userId = Auth::id();
-        mm($this->user);
-        $route = request()->route();
-        $uri = $route->getCompiled()->getStaticPrefix();
         $excepts = [
             '/admin/login',
             '/admin/logout',
