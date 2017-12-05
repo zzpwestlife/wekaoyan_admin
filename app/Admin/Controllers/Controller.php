@@ -25,7 +25,9 @@ class Controller extends BaseController
             '/admin/logout',
         ];
 
-        $this->logRequest();
+        $route = request()->route();
+        $uri = $route->getCompiled()->getStaticPrefix();
+        $this->logRequest($uri);
         if (!in_array($uri, $excepts)) {
             $this->middleware('auth');
 
@@ -38,16 +40,16 @@ class Controller extends BaseController
 
     /**
      * @comment 操作日志
+     * @param string $uri
      * @author zzp
      * @date 2017-11-20
      */
-    protected function logRequest()
+    protected function logRequest($uri)
     {
-        $route = request()->route();
         $data = [
             'user_id' => !empty($this->userId) ? $this->userId : 0,
             'ip' => getClientIp(),
-            'uri' => $route->getCompiled()->getStaticPrefix(),
+            'uri' => $uri,
             'get_params' => json_encode($_GET),
             'post_params' => json_encode($_POST),
             'ua' => isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '',
