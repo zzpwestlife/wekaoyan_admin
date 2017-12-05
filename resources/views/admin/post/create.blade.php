@@ -79,7 +79,7 @@
 
                                 <div class="col-sm-10 content_article">
                                     <p>
-                                        @if(!empty($post)){!! $post->content !!}@endif
+                                        @if(!empty($post)){!! $post->postContent->content !!}@endif
                                     </p>
                                 </div>
                             </div>
@@ -91,7 +91,7 @@
                                 <div class="col-sm-10">
                                     <div id="editor">
                                         <p>
-                                            @if(!empty($post)){!! $post->content !!}@endif
+                                            @if(!empty($post)){!! $post->postContent->content !!}@endif
                                         </p>
                                     </div>
                                 </div>

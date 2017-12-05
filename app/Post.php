@@ -22,6 +22,11 @@ class Post extends Model
         return $this->hasOne('\App\Forum', 'id', 'forum_id');
     }
 
+    public function postContent()
+    {
+        return $this->hasOne('\App\PostContent', 'experience_id', 'id');
+    }
+
     public function getShortContentAttribute()
     {
         return getShareContent($this->attributes['content']);

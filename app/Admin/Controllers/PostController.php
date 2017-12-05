@@ -5,6 +5,7 @@ namespace App\Admin\Controllers;
 use App\File;
 use App\Forum;
 use App\Post;
+use App\PostContent;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -38,10 +39,11 @@ class PostController extends Controller
     public function create(Request $request, $id = 0)
     {
         if (!empty($id)) {
-            $post = Post::with('user')->with('forum')->find($id);
+            $post = Post::with('user')->with('forum')->with('postContent')->find($id);
         } else {
             $post = new Post();
         }
+
         $users = User::orderBy('updated_at', 'desc')->get();
         $forums = Forum::orderBy('updated_at', 'desc')->get();
 
@@ -70,12 +72,26 @@ class PostController extends Controller
             'forum_id' => 'required|min:1',
         ]);
 
-        $data = compact('content', 'user_id', 'forum_id', 'title', 'count');
+        $data = [
+            'user_id' => $user_id,
+            'forum_id' => $forum_id,
+            'title' => $title,
+            'count' => $count,
+            'content' => '',
+        ];
 
         if (empty($id)) {
-            Post::create($data);
+            $newPost = Post::create($data);
+            $id = $newPost->id;
         } else {
             Post::where('id', $id)->update($data);
+        }
+
+        $postContent = PostContent::where('experience_id', $id)->count();
+        if ($postContent) {
+            PostContent::where('experience_id', $id)->update(['content' => $content]);
+        } else {
+            PostContent::create(['experience_id' => $id, 'content' => $content]);
         }
 
         if ($request->ajax()) {
@@ -105,6 +121,7 @@ class PostController extends Controller
             ];
         } else {
             Post::destroy($id);
+            PostContent::where('experience_id', $id)->delete();
             $returnData = [
                 'error' => 0,
                 'msg' => ''
