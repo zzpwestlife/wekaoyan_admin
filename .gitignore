@@ -1,13 +1,25 @@
-.env
-vendor
 !.gitignore
 !.env.production
-composer.lock
-_ide_helper.php
-.idea
-.project
-refresh-test.gif
-.php_cs.cache
+vendor/
+node_modules/
+npm-debug.log
+
+# Laravel 4 specific
+bootstrap/compiled.php
+app/storage/
+
+# Laravel 5 & Lumen specific
+storage/
+public/storage
 /public/bower_components
 /public/uploads
-/storage/framework/sessions
+public/hot
+# storage/*.key
+.env.*.php
+.env.php
+.env
+Homestead.yaml
+Homestead.json
+
+# Rocketeer PHP task runner and deployment package. https://github.com/rocketeers/rocketeer
+.rocketeer/

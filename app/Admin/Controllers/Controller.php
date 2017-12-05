@@ -4,22 +4,23 @@ namespace App\Admin\Controllers;
 
 use App\AdminOperateLog;
 use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
 
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     protected $user;
+    protected $userId;
 
     public function __construct()
     {
         $this->user = Auth::user();
+        $this->userId = Auth::id();
+        mm($this->user);
         $route = request()->route();
         $uri = $route->getCompiled()->getStaticPrefix();
         $excepts = [
@@ -47,7 +48,7 @@ class Controller extends BaseController
     {
         $route = request()->route();
         $data = [
-            'user_id' => !empty($this->user) ? $this->user->id : 0,
+            'user_id' => !empty($this->userId) ? $this->userId : 0,
             'ip' => getClientIp(),
             'uri' => $route->getCompiled()->getStaticPrefix(),
             'get_params' => json_encode($_GET),
