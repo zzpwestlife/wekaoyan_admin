@@ -21,12 +21,25 @@ class LoginController extends Controller
             'password' => 'required|min:6|max:30',
         ]);
 
+#        $user = request(['name', 'password']);
+#        if (true == \Auth::guard('admin')->attempt($user)) {
+#            return redirect('/admin/home');
+#        }
+#
+#        return \Redirect::back()->withErrors("用户名密码错误");
+	#}
+	        $name = request('name');
+        $password = request('password');
+\Log::info('step1 name:' . $name . ' password:' . $password);
         $user = request(['name', 'password']);
         if (true == \Auth::guard('admin')->attempt($user)) {
+
+\Log::info('step2 name:' . $name . ' password:' . $password);
             return redirect('/admin/home');
         }
-
+\Log::info('step3 name:' . $name . ' password:' . $password);
         return \Redirect::back()->withErrors("用户名密码错误");
+    
     }
 
     /*
