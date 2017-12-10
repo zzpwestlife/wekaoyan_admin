@@ -1,7 +1,6 @@
 @extends("admin.layout.main")
 @section('add_css')
-    <style type="text/css">
-    </style>
+    {!! Html::style('/datetimepicker-master/build/jquery.datetimepicker.min.css') !!}
 @endsection
 
 @section("content")
@@ -73,6 +72,16 @@
                                 </div>
                             </div>
 
+                            <div class="form-group col-sm-12">
+                                <label for="updated_at" class="col-sm-2 control-label">更新时间<span
+                                            class="required-field">*</span></label>
+
+                                <div class="col-sm-4 form-group">
+                                    <input type='text' class="form-control updated_at" id="datetimepicker" name="updated_at"
+                                           placeholder="不填默认为当期时间" value="{{$post->updated_at or ''}}"/>
+                                </div>
+                            </div>
+
                             <div class="form-group  col-sm-12">
                                 <label for="editor" class="col-sm-2 control-label">内容预览<span
                                             class="required-field">*</span></label>
@@ -114,9 +123,19 @@
     </section>
 @endsection
 
+@section('add_script')
+    {!! Html::script('/datetimepicker-master/build/jquery.datetimepicker.full.min.js') !!}
+@endsection
+
 @section('script')
     <script type="text/javascript">
         $(document).ready(function () {
+            $.datetimepicker.setLocale('zh');
+            $('#datetimepicker').datetimepicker({
+                'step': 1,
+                maxDate: '+1970/01/02'//tomorrow is maximum date calendar
+            });
+
             $('.content_article h1,.content_article h2,.content_article h3,.content_article h4,.content_article h5,.content_article p').css('text-align', 'justify');
             $('.content_article h1').css('font-weight', '400');
             $('.content_article h2').css('font-weight', '400');
@@ -133,6 +152,7 @@
             $('.content_article p').css('line-height', '2.5rem');
             $('.content_article p').css('font-size', '1.5rem');
             $('.content_article p').css('margin-bottom', '2rem');
+            $('.content_article table').css('width', '95%');
 
             $('#name').focus();
             $(".select2").select2({language: "zh-CN"});
@@ -182,6 +202,7 @@
                 var userId = $('#user_id').val();
                 var title = $('#title').val();
                 var count = $('#count').val();
+                var updatedAt = $('.updated_at').val();
                 var content = editor.txt.html();
 
                 console.log(forumId, userId, content);
@@ -202,6 +223,7 @@
                             'user_id': userId,
                             'title': title,
                             'count': count,
+                            'updated_at': updatedAt,
                             'content': content
                         },
                         dataType: "JSON",

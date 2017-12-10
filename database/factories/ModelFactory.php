@@ -63,6 +63,14 @@ $factory->define(App\Post::class, function (Faker\Generator $faker) {
     ];
 });
 
+// 点赞
+$factory->define(App\PostLike::class, function (Faker\Generator $faker) {
+    return [
+        'experience_id' => rand(1, 312),
+        'user_id' => rand(593, 1092)
+    ];
+});
+
 
 $factory->define(App\Forum::class, function (Faker\Generator $faker) {
     return [

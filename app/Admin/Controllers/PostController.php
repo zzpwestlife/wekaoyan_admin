@@ -59,11 +59,13 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $now = (new Carbon())->toDateTimeString();
         $id = intval($request->input('id', 0));
         $title = trim($request->input('title', ''));
         $content = trim($request->input('content', ''));
         $user_id = intval($request->input('user_id', 0));
         $forum_id = intval($request->input('forum_id', 0));
+        $updatedAt = trim($request->input('updated_at', $now));
         $count = intval($request->input('count', 0));
         $this->validate($request, [
             'title' => 'required|min:1',
@@ -84,6 +86,7 @@ class PostController extends Controller
             $newPost = Post::create($data);
             $id = $newPost->id;
         } else {
+            $data['updated_at'] = $updatedAt;
             Post::where('id', $id)->update($data);
         }
 
