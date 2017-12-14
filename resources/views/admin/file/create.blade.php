@@ -166,7 +166,7 @@
             $("#form-item").validate();
             $(".select2").select2({language: "zh-CN"});
             $("div.switch input[type=\"checkbox\"]").not("[data-switch-no-init]").bootstrapSwitch();
-            var fileMaxSize = 20; // MB
+            var fileMaxSize = 200; // MB
 
             var myDropzone = new Dropzone("div#myDrop", {
                 url: "/admin/files/upload",
