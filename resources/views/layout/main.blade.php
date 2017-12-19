@@ -49,18 +49,16 @@
         var _hmt = _hmt || [];
         (function () {
             var hm = document.createElement("script");
-            hm.src = "https://hm.baidu.com/hm.js?ef0c7fa5d675e36cd33b0d7cfec69a73";
+            hm.src = "https://hm.baidu.com/hm.js?a11db1949a2401c12e905ad27f4ff5f7";
             var s = document.getElementsByTagName("script")[0];
             s.parentNode.insertBefore(hm, s);
         })();
     </script>
 
-</head>
-<script type="text/javascript">
-    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-    document.write(unescape("%3Cspan id='cnzz_stat_icon_1271451031'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1271451031%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));
-</script>
 
+</head>
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan id='cnzz_stat_icon_1271451357'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1271451357%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
