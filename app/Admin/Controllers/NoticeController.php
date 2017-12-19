@@ -15,7 +15,7 @@ class NoticeController extends Controller
     public function index()
     {
         $notices = \App\Notice::all();
-        return view('admin/notice/index', compact('notices'));
+        return view('notice/index', compact('notices'));
     }
 
     /**
@@ -25,7 +25,7 @@ class NoticeController extends Controller
      */
     public function create()
     {
-        return view('admin/notice/create');
+        return view('notice/create');
     }
 
     /**
@@ -45,7 +45,7 @@ class NoticeController extends Controller
 
         dispatch(new \App\Jobs\SendMessage($notice));
 
-        return redirect('/admin/notices');
+        return redirect('/notices');
     }
 
     /**

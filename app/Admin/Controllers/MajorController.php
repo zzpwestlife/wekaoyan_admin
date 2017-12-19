@@ -19,7 +19,7 @@ class MajorController extends Controller
             $majors = Major::where('school_id',
                 $schoolId)->with('school')->orderBy('updated_at', 'desc')->paginate();
         }
-        return view('/admin/major/index', compact('majors', 'schoolId'));
+        return view('/major/index', compact('majors', 'schoolId'));
     }
 
     public function create(Request $request, $id = 0)
@@ -38,7 +38,7 @@ class MajorController extends Controller
         }
         $schools = School::orderBy('updated_at', 'desc')->get();
 
-        return view('admin/major/create', compact('major', 'schools', 'school'));
+        return view('major/create', compact('major', 'schools', 'school'));
     }
 
     public function store(Request $request)
@@ -56,7 +56,7 @@ class MajorController extends Controller
         } else {
             Major::where('id', $id)->update($data);
         }
-        return redirect('/admin/majors');
+        return redirect('/majors');
     }
 
     public function delete(Major $major)

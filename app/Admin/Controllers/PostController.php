@@ -25,7 +25,7 @@ class PostController extends Controller
             'desc'
         )->paginate();
 
-        return view('/admin/post/index', compact('posts'));
+        return view('/post/index', compact('posts'));
     }
 
     /**
@@ -47,7 +47,7 @@ class PostController extends Controller
         $users = User::orderBy('updated_at', 'desc')->get();
         $forums = Forum::orderBy('updated_at', 'desc')->get();
 
-        return view('admin/post/create', compact('post', 'users', 'forums'));
+        return view('post/create', compact('post', 'users', 'forums'));
     }
 
     /**
@@ -104,7 +104,7 @@ class PostController extends Controller
             ];
             return response()->json($returnData)->setCallback($request->input('callback'));
         }
-        return redirect('/admin/posts');
+        return redirect('/posts');
     }
 
     /**

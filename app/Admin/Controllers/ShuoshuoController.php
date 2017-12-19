@@ -22,7 +22,7 @@ class ShuoshuoController extends Controller
             'desc'
         )->paginate();
 //        dd($shuoshuos[0]->comment_count);
-        return view('/admin/shuoshuo/index', compact('shuoshuos'));
+        return view('/shuoshuo/index', compact('shuoshuos'));
     }
 
     /**
@@ -43,7 +43,7 @@ class ShuoshuoController extends Controller
         $users = User::orderBy('updated_at', 'desc')->get();
         $forums = Forum::orderBy('updated_at', 'desc')->get();
 
-        return view('admin/shuoshuo/create', compact('shuoshuo', 'users', 'forums'));
+        return view('shuoshuo/create', compact('shuoshuo', 'users', 'forums'));
     }
 
     /**
@@ -71,7 +71,7 @@ class ShuoshuoController extends Controller
         } else {
             Shuoshuo::where('id', $id)->update($data);
         }
-        return redirect('/admin/shuoshuos');
+        return redirect('/shuoshuos');
     }
 
     /**

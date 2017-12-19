@@ -21,7 +21,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::orderBy('updated_at', 'desc')->paginate();
-        return view('/admin/user/index', compact('users'));
+        return view('/user/index', compact('users'));
     }
 
     /**
@@ -41,7 +41,7 @@ class UserController extends Controller
         }
         $users = User::orderBy('updated_at', 'desc')->get();
 
-        return view('admin/user/create', compact('user', 'users'));
+        return view('user/create', compact('user', 'users'));
     }
 
     /**
@@ -83,7 +83,7 @@ class UserController extends Controller
         } else {
             User::where('id', $id)->update($data);
         }
-        return redirect('/admin/users');
+        return redirect('/users');
     }
 
     /**

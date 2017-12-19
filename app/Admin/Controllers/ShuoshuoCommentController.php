@@ -34,7 +34,7 @@ class ShuoshuoCommentController extends Controller
             )->paginate();
         }
 
-        return view('/admin/shuoshuo_comment/index', compact('shuoshuo', 'shuoshuoComments'));
+        return view('/shuoshuo_comment/index', compact('shuoshuo', 'shuoshuoComments'));
     }
 
     /**
@@ -63,7 +63,7 @@ class ShuoshuoCommentController extends Controller
         $users = User::orderBy('updated_at', 'desc')->get();
         $shuoshuos = Shuoshuo::orderBy('updated_at', 'desc')->get();
 
-        return view('admin/shuoshuo_comment/create', compact('shuoshuoComment', 'users', 'shuoshuos', 'shuoshuo'));
+        return view('shuoshuo_comment/create', compact('shuoshuoComment', 'users', 'shuoshuos', 'shuoshuo'));
     }
 
     /**
@@ -94,7 +94,7 @@ class ShuoshuoCommentController extends Controller
         } else {
             $new = ShuoshuoComment::where('id', $id)->update($data);
         }
-        return redirect('/admin/shuoshuo_comments?shuoshuo_id=' . $shuoshuo_id);
+        return redirect('/shuoshuo_comments?shuoshuo_id=' . $shuoshuo_id);
     }
 
     /**

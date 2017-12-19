@@ -13,7 +13,7 @@ class SchoolController extends Controller
     {
         $schools = School::orderBy('updated_at', 'desc')->paginate();
 //        dd($schools[0]->major_count);
-        return view('/admin/school/index', compact('schools'));
+        return view('/school/index', compact('schools'));
     }
 
     public function create(Request $request, $id = 0)
@@ -23,7 +23,7 @@ class SchoolController extends Controller
         } else {
             $school = new School();
         }
-        return view('admin/school/create', compact('school'));
+        return view('school/create', compact('school'));
     }
 
     public function store(Request $request)
@@ -38,7 +38,7 @@ class SchoolController extends Controller
         } else {
             School::where('id', $id)->update(request(['name']));
         }
-        return redirect('/admin/schools');
+        return redirect('/schools');
     }
 
     public function delete(School $school)

@@ -33,7 +33,7 @@ class PostCommentController extends Controller
                 'desc'
             )->paginate();
         }
-        return view('/admin/post_comment/index', compact('post', 'postComments'));
+        return view('/post_comment/index', compact('post', 'postComments'));
     }
 
     /**
@@ -62,7 +62,7 @@ class PostCommentController extends Controller
         $users = User::orderBy('updated_at', 'desc')->get();
         $posts = Post::orderBy('updated_at', 'desc')->get();
 
-        return view('admin/post_comment/create', compact('postComment', 'users', 'posts', 'post'));
+        return view('post_comment/create', compact('postComment', 'users', 'posts', 'post'));
     }
 
     /**
@@ -97,7 +97,7 @@ class PostCommentController extends Controller
         } else {
             $new = PostComment::where('id', $id)->update($data);
         }
-        return redirect('/admin/post_comments?post_id=' . $post_id);
+        return redirect('/post_comments?post_id=' . $post_id);
     }
 
     /**

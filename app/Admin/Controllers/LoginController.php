@@ -8,7 +8,7 @@ class LoginController extends Controller
 {
     public function index()
     {
-        return view('/admin/login/index');
+        return view('/login/index');
     }
 
     /*
@@ -23,7 +23,7 @@ class LoginController extends Controller
 
         $user = request(['name', 'password']);
         if (true == \Auth::guard('admin')->attempt($user)) {
-            return redirect('/admin/home');
+            return redirect('/home');
         } else {
             return \Redirect::back()->withErrors("用户名密码错误");
         }
@@ -36,6 +36,6 @@ class LoginController extends Controller
     public function logout()
     {
         \Auth::guard('admin')->logout();
-        return redirect('/admin/login');
+        return redirect('/login');
     }
 }

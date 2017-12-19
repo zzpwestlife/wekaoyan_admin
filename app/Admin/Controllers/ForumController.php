@@ -18,7 +18,7 @@ class ForumController extends Controller
     public function index()
     {
         $forums = Forum::orderBy('updated_at', 'desc')->paginate();
-        return view('/admin/forum/index', compact('forums'));
+        return view('/forum/index', compact('forums'));
     }
 
     /**
@@ -36,7 +36,7 @@ class ForumController extends Controller
         } else {
             $forum = new Forum();
         }
-        return view('admin/forum/create', compact('forum'));
+        return view('forum/create', compact('forum'));
     }
 
     /**
@@ -66,7 +66,7 @@ class ForumController extends Controller
             ]);
             Forum::where('id', $id)->update($data);
         }
-        return redirect('/admin/forums');
+        return redirect('/forums');
     }
 
     /**

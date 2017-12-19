@@ -32,8 +32,8 @@ class Controller extends BaseController
             $this->middleware('auth');
 
 //            if (Auth::check() == false) {
-//                return redirect('/admin/login/index');
-//                return redirect()->guest('/admin/login');
+//                return redirect('/login/index');
+//                return redirect()->guest('/login');
 //            }
         }
     }

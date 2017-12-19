@@ -23,7 +23,7 @@ class QuestionController extends Controller
         )->paginate();
 
 //        dd($questions);
-        return view('/admin/question/index', compact('questions'));
+        return view('/question/index', compact('questions'));
     }
 
     /**
@@ -44,7 +44,7 @@ class QuestionController extends Controller
         $users = User::orderBy('updated_at', 'desc')->get();
         $forums = Forum::orderBy('updated_at', 'desc')->get();
 
-        return view('admin/question/create', compact('question', 'users', 'forums'));
+        return view('question/create', compact('question', 'users', 'forums'));
     }
 
     /**
@@ -83,7 +83,7 @@ class QuestionController extends Controller
             ];
             return response()->json($returnData)->setCallback($request->input('callback'));
         }
-        return redirect('/admin/questions');
+        return redirect('/questions');
     }
 
     /**

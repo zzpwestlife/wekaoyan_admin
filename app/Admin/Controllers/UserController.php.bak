@@ -12,7 +12,7 @@ class UserController extends Controller
     public function index()
     {
         $users = \App\AdminUser::paginate(10);
-        return view('/admin/user/index', compact('users'));
+        return view('/user/index', compact('users'));
     }
 
     /*
@@ -20,7 +20,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('/admin/user/add');
+        return view('/user/add');
     }
 
     /*
@@ -36,7 +36,7 @@ class UserController extends Controller
         $name = request('name');
         $password = bcrypt(request('password'));
         \App\AdminUser::create(compact('name', 'password'));
-        return redirect('/admin/users');
+        return redirect('/users');
     }
 
     /*
@@ -46,7 +46,7 @@ class UserController extends Controller
     {
         $roles = \App\AdminRole::all();
         $myRoles = $user->roles;
-        return view('/admin/user/role', compact('roles', 'myRoles', 'user'));
+        return view('/user/role', compact('roles', 'myRoles', 'user'));
     }
 
     /*

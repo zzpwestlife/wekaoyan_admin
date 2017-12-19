@@ -12,7 +12,7 @@ class PermissionController extends Controller
     public function index()
     {
         $permissions = \App\AdminPermission::paginate(10);
-        return view('/admin/permission/index', compact('permissions'));
+        return view('/permission/index', compact('permissions'));
     }
 
     /*
@@ -20,7 +20,7 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        return view('/admin/permission/add');
+        return view('/permission/add');
     }
 
     /*
@@ -34,6 +34,6 @@ class PermissionController extends Controller
         ]);
 
         \App\AdminPermission::create(request(['name', 'description']));
-        return redirect('/admin/permissions');
+        return redirect('/permissions');
     }
 }

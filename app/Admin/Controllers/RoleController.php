@@ -12,7 +12,7 @@ class RoleController extends Controller
     public function index()
     {
         $roles = \App\AdminRole::paginate(10);
-        return view('/admin/role/index', compact('roles'));
+        return view('/role/index', compact('roles'));
     }
 
     /*
@@ -20,7 +20,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        return view('/admin/role/add');
+        return view('/role/add');
     }
 
     /*
@@ -34,7 +34,7 @@ class RoleController extends Controller
         ]);
 
         \App\AdminRole::create(request(['name', 'description']));
-        return redirect('/admin/roles');
+        return redirect('/roles');
     }
 
     /*
@@ -44,7 +44,7 @@ class RoleController extends Controller
     {
         $permissions = \App\AdminPermission::all();
         $myPermissions = $role->permissions;
-        return view('/admin/role/permission', compact('permissions', 'myPermissions', 'role'));
+        return view('/role/permission', compact('permissions', 'myPermissions', 'role'));
     }
 
     /*

@@ -15,7 +15,7 @@ class TopicController extends Controller
     public function index()
     {
         $topics = \App\Topic::all();
-        return view('admin/topic/index', compact('topics'));
+        return view('topic/index', compact('topics'));
     }
 
     /**
@@ -25,7 +25,7 @@ class TopicController extends Controller
      */
     public function create()
     {
-        return view('admin/topic/create');
+        return view('topic/create');
     }
 
     /**
@@ -41,7 +41,7 @@ class TopicController extends Controller
         ]);
 
         \App\Topic::create(request(['name']));
-        return redirect('/admin/topics');
+        return redirect('/topics');
     }
 
     /**
@@ -52,7 +52,7 @@ class TopicController extends Controller
      */
     public function show(Topic $topic)
     {
-        return view('admin/topic/show', compact('topic'));
+        return view('topic/show', compact('topic'));
     }
 
     /**

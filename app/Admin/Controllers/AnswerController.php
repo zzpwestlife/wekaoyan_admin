@@ -28,7 +28,7 @@ class AnswerController extends Controller
             $answers = Answer::where('question_id', $questionId)->with('user')->with('question')->orderBy('updated_at', 'desc')->paginate();
         }
 
-        return view('/admin/answer/index', compact('question', 'answers'));
+        return view('/answer/index', compact('question', 'answers'));
     }
 
     /**
@@ -57,7 +57,7 @@ class AnswerController extends Controller
         $users = User::orderBy('updated_at', 'desc')->get();
         $questions = Question::orderBy('updated_at', 'desc')->get();
 
-        return view('admin/answer/create', compact('answer', 'users', 'questions', 'question'));
+        return view('answer/create', compact('answer', 'users', 'questions', 'question'));
     }
 
     /**
@@ -89,7 +89,7 @@ class AnswerController extends Controller
             $new = Answer::where('id', $id)->update($data);
         }
 
-        return redirect('/admin/answers?question_id=' . $question_id);
+        return redirect('/answers?question_id=' . $question_id);
     }
 
     /**
