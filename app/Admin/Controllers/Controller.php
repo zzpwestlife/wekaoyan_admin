@@ -21,8 +21,8 @@ class Controller extends BaseController
         $this->user = Auth::user();
         $this->userId = Auth::id();
         $excepts = [
-            '/admin/login',
-            '/admin/logout',
+            '/login',
+            '/logout',
         ];
 
         $route = request()->route();
