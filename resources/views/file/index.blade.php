@@ -27,7 +27,7 @@
                             <select id="user_id" name="user_id" class="form-control select2">
                                 <option value="0">请选择</option>
                                 @foreach($users as $key => $value)
-                                    <option value="{{$value->id}}" @if($value->id == $searchParams['userId']) selected
+                                    <option value="{{$value->id}}" @if($value->id == $searchParams['user_id']) selected
                                             @endif>{{$value->name}}</option>
                                 @endforeach
                             </select>
@@ -38,7 +38,7 @@
                                 <option value="0">请选择</option>
                                 @foreach($forums as $key => $value)
                                     <option value="{{$value->id}}"
-                                            @if($value->id == $searchParams['forumId']) selected
+                                            @if($value->id == $searchParams['forum_id']) selected
                                             @endif>{{$value->name}}</option>
                                 @endforeach
                             </select>

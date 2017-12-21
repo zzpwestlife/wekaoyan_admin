@@ -60,8 +60,8 @@ class FileController extends Controller
                 'startTime' => $startTime,
                 'endTime' => $endTime,
                 'name' => $name,
-                'userId' => $userId,
-                'forumId' => $forumId,
+                'user_id' => $userId,
+                'forum_id' => $forumId,
             ],
             'forums' => $forums,
             'users' => $users
