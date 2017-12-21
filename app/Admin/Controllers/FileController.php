@@ -128,7 +128,8 @@ class FileController extends Controller
     {
         if ($request->isMethod('get')) {
             $path = $request->input('path');
-            if (!unlink($path)) {
+//            if (!unlink($path)) {
+            if (!rename($path, $path . '.' . time() . '.' . 'deleted')) {
                 $returnData = [
                     'error' => 1,
                     'msg' => '文件删除失败'
