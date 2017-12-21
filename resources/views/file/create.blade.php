@@ -1,12 +1,5 @@
 @extends("layout.main")
 
-@section('add_css')
-    {!! Html::style('/bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css') !!}
-    {!! Html::style('/dropzone/dist/min/dropzone.min.css') !!}
-    {{--http://xdsoft.net/jqplugins/datetimepicker/--}}
-    {!! Html::style('/datetimepicker-master/build/jquery.datetimepicker.min.css') !!}
-@endsection
-
 @section("content")
     <!-- Main content -->
     <section class="content">
@@ -141,13 +134,6 @@
             </div>
         </div>
     </section>
-
-@endsection
-
-@section('add_script')
-    {!! Html::script('/bower_components/bootstrap-switch/dist/js/bootstrap-switch.min.js') !!}
-    {!! Html::script('/dropzone/dist/min/dropzone.min.js') !!}
-    {!! Html::script('/datetimepicker-master/build/jquery.datetimepicker.full.min.js') !!}
 
 @endsection
 

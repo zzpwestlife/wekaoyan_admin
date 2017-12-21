@@ -15,10 +15,37 @@ class ForumController extends Controller
      * @author zzp
      * @date 2017-10-27
      */
-    public function index()
+    public function index(Request $request)
     {
-        $forums = Forum::orderBy('updated_at', 'desc')->paginate();
-        return view('/forum/index', compact('forums'));
+        $startTime = trim($request->input('start_time', ''));
+        $endTime = trim($request->input('end_time', ''));
+        $name = trim($request->input('name', ''));
+        $forums = Forum::orderBy('updated_at', 'desc');
+
+        if (!empty($name)) {
+            $forums->where(function ($forums) use ($name) {
+                $forums->where('name', 'like', '%' . $name . '%')
+                    ->orWhere('alias', 'like', '%' . $name . '%')
+                    ->orWhere('alias_abbr', 'like', '%' . $name . '%');
+            });
+        }
+
+        if (!empty($startTime) && !empty($endTime) && ($endTime > $startTime)) {
+            $forums->where('updated_at', '>', $startTime);
+            $forums->where('updated_at', '<', $endTime);
+        }
+        $forums = $forums->paginate();
+
+        $returnData = [
+            'forums' => $forums,
+            'searchParams' => [
+                'startTime' => $startTime,
+                'endTime' => $endTime,
+                'name' => $name,
+            ]
+
+        ];
+        return view('/forum/index', $returnData);
     }
 
     /**

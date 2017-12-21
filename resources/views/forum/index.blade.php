@@ -20,9 +20,28 @@
         <!-- /.box-header -->
         <div class="box-body">
             <div id="item_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
-                <div class="row">
-                    <div class="col-sm-6"></div>
-                    <div class="col-sm-6"></div>
+                <div class="row" id="frm_search_info" style="margin-bottom: 30px">
+                    <div class="col-sm-12">
+                        <div class="col-sm-5">
+                            修改日期：<input type='text' class="form-control" id="start_time" name="start_time"
+                                        value="{{$searchParams['startTime']}}"
+                                        placeholder="开始时间"/>
+
+                            - <input type='text' class="form-control" id="end_time" name="end_time"
+                                     value="{{$searchParams['endTime']}}"
+                                     placeholder="结束时间"/>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" name="name" id="" class="form-control" placeholder="论坛名/拼音/缩写"
+                                   value="{{$searchParams['name']}}">
+                            <button name="" id="btn_clear" class="btn btn-default" type="submit">
+                                清空
+                            </button>
+                            <button name="" id="btn_search" class="btn btn-success" type="submit">
+                                搜索
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
@@ -85,7 +104,7 @@
                     {{--显示第1-20行，共444行--}}
                     {{--</div>--}}
                     <div class="col-sm-12">
-                        {{$forums->links()}}
+                        {{$forums->appends($searchParams)->links()}}
                     </div>
                 </div>
             </div>
@@ -96,6 +115,14 @@
             <script type="text/javascript">
 
                 $(document).ready(function () {
+                    $.datetimepicker.setLocale('zh');
+                    $('#start_time, #end_time').datetimepicker({
+                        'step': 1,
+                        maxDate: '+1970/01/02'//tomorrow is maximum date calendar
+                    });
+
+                    // 搜索
+                    searchWithParams('/forums/?page=1');
 
                     $.ajaxSetup({
                         headers: {

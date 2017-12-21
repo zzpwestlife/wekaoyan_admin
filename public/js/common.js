@@ -1,18 +1,12 @@
-/**
- * 将参数对象解析成
- * 符合 RequestCriteria 风格的 url
- * @param params
- * @returns {string}
- */
 parserParams2Url = function (params) {
 
     var url = '';
     $.each(params, function (index, item) {
 
         if (url) {
-            url += ';';
+            url += '&';
         }
-        url += index + '|:' + item;
+        url += index + '=' + item;
 
     });
     return url;
@@ -223,9 +217,8 @@ function searchWithParams(url) {
         });
 
         if (!$.isEmptyObject(params)) {
-            url += "&search=" + parserParams2Url(params);
+            url += "&" + parserParams2Url(params);
         }
-
         location.href = url;
     });
 
