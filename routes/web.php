@@ -231,6 +231,7 @@ Route::get('files/create/{id}', [
 Route::post('/files/store', '\App\Admin\Controllers\FileController@store');
 // 文件上传
 Route::post('/files/upload', '\App\Admin\Controllers\FileController@upload');
+
 // 删除文件 带表格记录
 Route::post('/files/delete', [
     'as' => 'files/delete_all',

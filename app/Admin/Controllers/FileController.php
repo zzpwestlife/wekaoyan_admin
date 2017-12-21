@@ -150,7 +150,8 @@ class FileController extends Controller
             } else {
                 $file = File::find($id);
                 if (!empty($file->path) && is_file($file->path)) {
-                    unlink($file->path);
+                    rename($file->path, $file->path . '.' . time() . '.' . 'deleted')
+//                    unlink($file->path);
                 }
                 File::destroy($id);
                 $returnData = [
