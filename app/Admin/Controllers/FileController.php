@@ -25,9 +25,48 @@ class FileController extends Controller
      */
     public function index(Request $request)
     {
-//        return redirect()->guest('/login');
-        $files = File::with('forum')->with('user')->orderBy('updated_at', 'desc')->paginate();
-        return view('/file/index', compact('files'));
+
+        $userId = intval($request->input('user_id', 0));
+        $forumId = intval($request->input('forum_id', 0));
+        $startTime = trim($request->input('start_time', ''));
+        $endTime = trim($request->input('end_time', ''));
+        $name = trim($request->input('name', ''));
+        $query = File::with('forum')->with('user')->orderBy('updated_at', 'desc');
+
+        if (!empty($name)) {
+                $query->where('filename', 'like', '%' . $name . '%');
+        }
+
+        if (!empty($startTime) && !empty($endTime) && ($endTime > $startTime)) {
+            $query->where('updated_at', '>', $startTime);
+            $query->where('updated_at', '<', $endTime);
+        }
+
+        if (!empty($userId)) {
+            $query->where('user_id', $userId);
+        }
+
+        if (!empty($forumId)) {
+            $query->where('forum_id', $forumId);
+        }
+        $query = $query->paginate();
+
+        $forums = Forum::orderBy('updated_at', 'desc')->get();
+        $users = User::orderBy('updated_at', 'desc')->get();
+
+        $returnData = [
+            'files' => $query,
+            'searchParams' => [
+                'startTime' => $startTime,
+                'endTime' => $endTime,
+                'name' => $name,
+                'userId' => $userId,
+                'forumId' => $forumId,
+            ],
+            'forums' => $forums,
+            'users' => $users
+        ];
+        return view('/file/index', $returnData);
     }
 
     /**

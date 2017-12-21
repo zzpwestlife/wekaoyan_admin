@@ -20,24 +20,24 @@ class ForumController extends Controller
         $startTime = trim($request->input('start_time', ''));
         $endTime = trim($request->input('end_time', ''));
         $name = trim($request->input('name', ''));
-        $forums = Forum::orderBy('updated_at', 'desc');
+        $query = Forum::orderBy('updated_at', 'desc');
 
         if (!empty($name)) {
-            $forums->where(function ($forums) use ($name) {
-                $forums->where('name', 'like', '%' . $name . '%')
+            $query->where(function ($query) use ($name) {
+                $query->where('name', 'like', '%' . $name . '%')
                     ->orWhere('alias', 'like', '%' . $name . '%')
                     ->orWhere('alias_abbr', 'like', '%' . $name . '%');
             });
         }
 
         if (!empty($startTime) && !empty($endTime) && ($endTime > $startTime)) {
-            $forums->where('updated_at', '>', $startTime);
-            $forums->where('updated_at', '<', $endTime);
+            $query->where('updated_at', '>', $startTime);
+            $query->where('updated_at', '<', $endTime);
         }
-        $forums = $forums->paginate();
+        $query = $query->paginate();
 
         $returnData = [
-            'forums' => $forums,
+            'forums' => $query,
             'searchParams' => [
                 'startTime' => $startTime,
                 'endTime' => $endTime,

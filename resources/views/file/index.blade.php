@@ -20,9 +20,46 @@
         <!-- /.box-header -->
         <div class="box-body">
             <div id="item_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
-                <div class="row">
-                    <div class="col-sm-6"></div>
-                    <div class="col-sm-6"></div>
+                <div class="row" id="frm_search_info" style="margin-bottom: 30px">
+                    <div class="col-sm-12">
+                        <div class="col-sm-4">
+                            用户：
+                            <select id="user_id" name="user_id" class="form-control select2">
+                                <option value="0">请选择</option>
+                                @foreach($users as $key => $value)
+                                    <option value="{{$value->id}}">{{$value->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-sm-4">
+                            论坛：
+                            <select id="forum_id" name="forum_id" class="form-control select2">
+                                <option value="0">请选择</option>
+                                @foreach($forums as $key => $value)
+                                    <option value="{{$value->id}}">{{$value->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        {{--<div class="col-sm-4">--}}
+                        {{--修改日期：<input type='text' class="form-control" id="start_time" name="start_time"--}}
+                        {{--value="{{$searchParams['startTime']}}"--}}
+                        {{--placeholder="开始时间"/>--}}
+
+                        {{--- <input type='text' class="form-control" id="end_time" name="end_time"--}}
+                        {{--value="{{$searchParams['endTime']}}"--}}
+                        {{--placeholder="结束时间"/>--}}
+                        {{--</div>--}}
+                        <div class="col-sm-4">
+                            <input type="text" name="name" id="" class="form-control" placeholder="文件名"
+                                   value="{{$searchParams['name']}}">
+                            <button name="" id="btn_clear" class="btn btn-default" type="submit">
+                                清空
+                            </button>
+                            <button name="" id="btn_search" class="btn btn-success" type="submit">
+                                搜索
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
@@ -102,7 +139,7 @@
                     {{--显示第1-20行，共444行--}}
                     {{--</div>--}}
                     <div class="col-sm-12">
-                        {{$files->links()}}
+                        {{$files->appends($searchParams)->links()}}
                     </div>
                 </div>
             </div>
@@ -113,6 +150,10 @@
             <script type="text/javascript">
 
                 $(document).ready(function () {
+
+                    $(".select2").select2({language: "zh-CN"});
+                    // 搜索
+                    searchWithParams('/files/?page=1');
 
                     $.ajaxSetup({
                         headers: {
