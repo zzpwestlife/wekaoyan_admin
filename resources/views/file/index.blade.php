@@ -38,7 +38,8 @@
                                 <option value="0">请选择</option>
                                 @foreach($forums as $key => $value)
                                     <option value="{{$value->id}}"
-                                            @if($value->id == $searchParams['forumId']) selected>{{$value->name}}</option>
+                                            @if($value->id == $searchParams['forumId']) selected
+                                            @endif>{{$value->name}}</option>
                                 @endforeach
                             </select>
                         </div>
