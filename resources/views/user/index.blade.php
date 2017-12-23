@@ -20,9 +20,21 @@
         <!-- /.box-header -->
         <div class="box-body">
             <div id="item_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
-                <div class="row">
-                    <div class="col-sm-6"></div>
-                    <div class="col-sm-6"></div>
+                <div class="row" id="frm_search_info" style="margin-bottom: 30px">
+                    <div class="col-sm-12">
+                        <div class="col-sm-4">
+                            <input type="text" name="name" id="" class="form-control" placeholder="用户名"
+                                   value="{{$searchParams['name']}}">
+                            <input type="number" name="mobile" id="mobile" class="form-control" placeholder="手机号"
+                                   value="{{$searchParams['mobile']}}">
+                            <button name="" id="btn_clear" class="btn btn-default" type="submit">
+                                清空
+                            </button>
+                            <button name="" id="btn_search" class="btn btn-success" type="submit">
+                                搜索
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
@@ -96,7 +108,7 @@
                     {{--显示第1-20行，共444行--}}
                     {{--</div>--}}
                     <div class="col-sm-12">
-                        {{$users->links()}}
+                        {{$users->appends($searchParams)->links()}}
                     </div>
                 </div>
             </div>
@@ -107,6 +119,9 @@
             <script type="text/javascript">
 
                 $(document).ready(function () {
+
+                    // 搜索
+                    searchWithParams('/users/?page=1');
 
                     $.ajaxSetup({
                         headers: {

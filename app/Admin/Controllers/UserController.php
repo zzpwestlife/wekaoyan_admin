@@ -18,10 +18,29 @@ class UserController extends Controller
      * @author zzp
      * @date 2017-10-27
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::orderBy('updated_at', 'desc')->paginate();
-        return view('/user/index', compact('users'));
+        $name = trim($request->input('name', ''));
+        $mobile = trim($request->input('mobile', ''));
+
+        $query = User::orderBy('updated_at', 'desc');
+        if (!empty($name)) {
+            $query->where('name', 'like', '%' . $name . '%');
+        }
+        if (!empty($mobile)) {
+            $query->where('mobile', 'like', '%' . $mobile . '%');
+        }
+        $query = $query->paginate();
+
+        $returnData = [
+            'users' => $query,
+            'searchParams' => [
+                'name' => $name,
+                'mobile' => $mobile,
+            ],
+        ];
+
+        return view('/user/index', $returnData);
     }
 
     /**
