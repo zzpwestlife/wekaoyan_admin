@@ -23,9 +23,9 @@
                 <div class="row" id="frm_search_info" style="margin-bottom: 30px">
                     <div class="col-sm-12">
                         <div class="col-sm-6">
-                            <input type="text" name="name" id="" class="form-control" placeholder="用户名"
+                            用户名: &nbsp;<input type="text" name="name" id="" class="form-control" placeholder="用户名"
                                    value="{{$searchParams['name']}}">
-                            <input type="number" name="mobile" id="" class="form-control" placeholder="手机号"
+                            手机号: &nbsp;<input type="text" name="mobile" id="" class="form-control" placeholder="手机号"
                                    value="{{$searchParams['mobile']}}">
                         </div>
                         <div class="col-sm-4">

@@ -200,6 +200,10 @@ $("#btn_clear").click(function () {
     $("#frm_search_info input[type=text]").each(function () {
         $(this).val("");
     });
+
+    $("#frm_search_info input[type=number]").each(function () {
+        $(this).val("");
+    });
 });
 
 /**
