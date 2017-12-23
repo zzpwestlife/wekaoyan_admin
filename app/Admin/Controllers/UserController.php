@@ -28,7 +28,7 @@ class UserController extends Controller
             $query->where('name', 'like', '%' . $name . '%');
         }
         if (!empty($mobile)) {
-            $query->where('mobile', 'like', '%' . $mobile . '%');
+            $query->where('mobile', $mobile);
         }
         $query = $query->paginate();
 

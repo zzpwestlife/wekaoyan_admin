@@ -22,11 +22,13 @@
             <div id="item_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
                 <div class="row" id="frm_search_info" style="margin-bottom: 30px">
                     <div class="col-sm-12">
-                        <div class="col-sm-4">
+                        <div class="col-sm-6">
                             <input type="text" name="name" id="" class="form-control" placeholder="用户名"
                                    value="{{$searchParams['name']}}">
-                            <input type="number" name="mobile" id="mobile" class="form-control" placeholder="手机号"
+                            <input type="number" name="mobile" id="" class="form-control" placeholder="手机号"
                                    value="{{$searchParams['mobile']}}">
+                        </div>
+                        <div class="col-sm-4">
                             <button name="" id="btn_clear" class="btn btn-default" type="submit">
                                 清空
                             </button>
