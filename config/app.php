@@ -192,7 +192,6 @@ return [
         Laracasts\Utilities\JavaScript\JavaScriptServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-        Yankewei\LaravelSensitive\SensitiveServiceProvider::class,
 
     ],
 
@@ -247,7 +246,6 @@ return [
         'JavaScript' => Laracasts\Utilities\JavaScript\JavaScriptFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Image' => Intervention\Image\Facades\Image::class,
-        'Sensitive' => Yankewei\LaravelSensitive\Facades\Sensitive::class,
 
     ],
 
