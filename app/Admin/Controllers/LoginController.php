@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\AdminUser;
 use Illuminate\Http\Request;
 
 class LoginController extends Controller
@@ -22,7 +23,10 @@ class LoginController extends Controller
         ]);
 
         $user = request(['name', 'password']);
-        if (true == \Auth::guard('admin')->attempt($user)) {
+
+        $userExist = AdminUser::where('name', $user['name'])->where('password', bcrypt($user['password']))->count();
+//        if (true == \Auth::guard('admin')->attempt($user)) {
+        if ($userExist) {
             return redirect('/home');
         } else {
             return \Redirect::back()->withErrors("用户名密码错误");
