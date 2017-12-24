@@ -98,12 +98,22 @@
 
                             <div id="files" style="display: none;"></div>
                             <div class="form-group col-sm-12">
-                                <label for="downloads" class="col-sm-2 control-label">下载量<span
+                                <label for="downloads_virtual" class="col-sm-2 control-label">真实下载量<span
+                                            class="required-field">*</span></label>
+
+                                <div class="col-sm-2">
+                                    <input type="number" class="form-control" name="downloads_virtual" id="downloads_virtual" min="0"
+                                           value="{{$file->downloads or 0}}">
+                                </div>
+                            </div>
+
+                            <div class="form-group col-sm-12">
+                                <label for="downloads" class="col-sm-2 control-label">假下载量<span
                                             class="required-field">*</span></label>
 
                                 <div class="col-sm-2">
                                     <input type="number" class="form-control" name="downloads" id="downloads" min="0"
-                                           value="{{$file->downloads or 0}}">
+                                           value="{{$file->downloads_virtual or 0}}">
                                 </div>
                             </div>
 

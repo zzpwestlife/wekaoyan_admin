@@ -77,7 +77,8 @@
                                 {{--<th>分类</th>--}}
                                 <th>资料类型</th>
                                 {{--<th>文件状态</th>--}}
-                                <th>下载量</th>
+                                <th>真实下载量</th>
+                                <th>假下载量</th>
                                 {{--<th>添加时间</th>--}}
                                 {{--<th>修改时间</th>--}}
                                 <th>操作</th>
@@ -96,6 +97,7 @@
                                         <td>@if($item->type==1)资料@else真题@endif</td>
                                         {{--<td>@if($item->status==1)有效@else无效@endif</td>--}}
                                         <td>{{$item->downloads}}</td>
+                                        <td>{{$item->downloads_virtual}}</td>
                                         {{--<td>{{$item->created_at->diffForHumans()}}</td>--}}
                                         {{--<td>{{$item->updated_at->diffForHumans()}}</td>--}}
                                         <td>

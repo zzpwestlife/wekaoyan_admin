@@ -114,6 +114,7 @@ class FileController extends Controller
         $userId = intval($request->input('user_id', 0));
         $filename = trim($request->input('filename', ''));
         $downloads = intval($request->input('downloads', 0));
+        $downloadsVirtual = intval($request->input('downloads_virtual', 0));
         $updatedAt = trim($request->input('updated_at', $now));
         $fileInfo = $request->input('file_info', []);
 
@@ -127,6 +128,7 @@ class FileController extends Controller
                         'user_id' => $userId,
                         'filename' => $oneItem['filename'],
                         'downloads' => $downloads,
+                        'downloads_virtual' => $downloadsVirtual,
                         'status' => File::STATUS_VALID,
                         'path' => $oneItem['path'],
                         'uri' => $oneItem['uri'],
@@ -142,6 +144,7 @@ class FileController extends Controller
                 'forum_id' => $forumId,
                 'user_id' => $userId,
                 'downloads' => $downloads,
+                'downloads_virtual' => $downloadsVirtual,
                 'status' => File::STATUS_VALID,
                 'updated_at' => $updatedAt,
             ];

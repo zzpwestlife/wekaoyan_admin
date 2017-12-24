@@ -191,7 +191,8 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         Laracasts\Utilities\JavaScript\JavaScriptServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
-        Intervention\Image\ImageServiceProvider::class
+        Intervention\Image\ImageServiceProvider::class,
+        Yankewei\LaravelSensitive\SensitiveServiceProvider::class,
 
     ],
 
@@ -245,7 +246,8 @@ return [
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'JavaScript' => Laracasts\Utilities\JavaScript\JavaScriptFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
-        'Image' => Intervention\Image\Facades\Image::class
+        'Image' => Intervention\Image\Facades\Image::class,
+        'Sensitive' => Yankewei\LaravelSensitive\Facades\Sensitive::class,
 
     ],
 
