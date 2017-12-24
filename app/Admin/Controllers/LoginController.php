@@ -24,9 +24,7 @@ class LoginController extends Controller
 
         $user = request(['name', 'password']);
 
-        $userExist = AdminUser::where('name', $user['name'])->where('password', bcrypt($user['password']))->count();
-//        if (true == \Auth::guard('admin')->attempt($user)) {
-        if ($userExist) {
+        if (true == \Auth::guard('admin')->attempt($user)) {
             return redirect('/home');
         } else {
             return \Redirect::back()->withErrors("用户名密码错误");
