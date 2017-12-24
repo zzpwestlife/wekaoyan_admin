@@ -53,6 +53,7 @@
                         {{--placeholder="结束时间"/>--}}
                         {{--</div>--}}
                         <div class="col-sm-4">
+                            文件名：
                             <input type="text" name="name" id="" class="form-control" placeholder="文件名"
                                    value="{{$searchParams['name']}}">
                             <button name="" id="btn_clear" class="btn btn-default" type="submit">
