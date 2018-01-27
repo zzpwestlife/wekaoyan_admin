@@ -243,6 +243,26 @@ Route::get('/files/delete', [
     'uses' => '\App\Admin\Controllers\FileController@delete'
 ]);
 
+
+/**
+ * 真题管理----------------------------------------------------------------------------------------------------------
+ */
+Route::get('/exams', '\App\Admin\Controllers\ExamController@index');
+// 新增界面
+Route::get('exams/create', [
+    'as' => 'exams.create',
+    'uses' => '\App\Admin\Controllers\ExamController@create'
+]);
+
+// 编辑界面
+Route::get('exams/create/{id}', [
+    'as' => 'exams.update',
+    'uses' => '\App\Admin\Controllers\ExamController@create'
+]);
+
+Route::post('/exams/store', '\App\Admin\Controllers\ExamController@store');
+
+
 /**
  * 前台用户管理----------------------------------------------------------------------------------------------------------
  */

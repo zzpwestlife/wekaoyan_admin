@@ -108,6 +108,14 @@
                                                 <i class="fa fa-edit"></i>
                                             </a>
 
+                                            @if($item->type!=1)
+                                                <a class="btn btn-icon btn-primary" data-toggle="tooltip"
+                                                   href="{{"/exams?file_id=".$item->id}}"
+                                                   title="分题管理">
+                                                    <i class="fa fa-database"></i>
+                                                </a>
+                                            @endif
+
                                             @if(isset($item) && !empty($item->uri))
                                                 <a class="btn btn-icon btn-success" data-toggle="tooltip"
                                                    href="{{DATA_URL . $item->uri}}" target="_blank"
