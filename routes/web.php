@@ -261,7 +261,27 @@ Route::get('exams/create/{id}', [
 ]);
 
 Route::post('/exams/store', '\App\Admin\Controllers\ExamController@store');
+Route::post('/exams/delete', '\App\Admin\Controllers\ExamController@delete');
 
+
+/**
+ * 真题回复管理----------------------------------------------------------------------------------------------------------
+ */
+Route::get('/exam_comments', '\App\Admin\Controllers\ExamCommentController@index');
+// 新增界面
+Route::get('exam_comments/create', [
+    'as' => 'exam_comments.create',
+    'uses' => '\App\Admin\Controllers\ExamCommentController@create'
+]);
+
+// 编辑界面
+Route::get('exam_comments/create/{id}', [
+    'as' => 'exam_comments.update',
+    'uses' => '\App\Admin\Controllers\ExamCommentController@create'
+]);
+
+Route::post('/exam_comments/store', '\App\Admin\Controllers\ExamCommentController@store');
+Route::post('/exam_comments/delete', '\App\Admin\Controllers\ExamCommentController@delete');
 
 /**
  * 前台用户管理----------------------------------------------------------------------------------------------------------

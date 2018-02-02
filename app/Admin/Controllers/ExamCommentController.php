@@ -3,16 +3,14 @@
 namespace App\Admin\Controllers;
 
 use App\Exam;
-use App\File;
-use App\Forum;
+use App\ExamComment;
 use App\User;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class ExamController extends Controller
+class ExamCommentController extends Controller
 {
     /**
-     * @comment 真题列表
+     * @comment 真题回复列表
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @author zzp
@@ -20,23 +18,23 @@ class ExamController extends Controller
      */
     public function index(Request $request)
     {
-        $fileId = intval($request->input('file_id'));
-        if (empty($fileId)) {
+        $examId = intval($request->input('exam_id'));
+        if (empty($examId)) {
             return redirect('/');
         }
 
-        $file = File::find($fileId);
-        $exams = Exam::where('file_id', $fileId)->orderBy('updated_at', 'desc')->get();
+        $exam = Exam::find($examId);
+        $examComments = ExamComment::where('exam_id', $examId)->orderBy('updated_at', 'desc')->get();
 
         $returnData = [
-            'file' => $file,
-            'exams' => $exams
+            'exam' => $exam,
+            'exam_comments' => $examComments
         ];
-        return view('/exam/index', $returnData);
+        return view('/exam_comment/index', $returnData);
     }
 
     /**
-     * @comment 创建真题
+     * @comment 创建真题回复
      * @param Request $request
      * @param int $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -45,28 +43,30 @@ class ExamController extends Controller
      */
     public function create(Request $request, $id = 0)
     {
-        $fileId = intval($request->input('file_id'));
-        if (empty($fileId)) {
+        $examId = intval($request->input('exam_id'));
+        if (empty($examId)) {
             return redirect('/');
         }
-        $file = File::find($fileId);
+        $exam = Exam::find($examId);
         if (!empty($id)) {
-            $exam = Exam::with('file')->find($id);
+            $examComment = ExamComment::find($id);
         } else {
-            $exam = new File();
+            $examComment = new ExamComment();
         }
+        $users = User::orderBy('updated_at', 'desc')->get();
 
         $returnData = [
             'exam' => $exam,
             'exam_types' => Exam::$examTypes,
-            'file' => $file
+            'exam_comment' => $examComment,
+            'users' => $users
 
         ];
-        return view('/exam/create', $returnData);
+        return view('/exam_comment/create', $returnData);
     }
 
     /**
-     * @comment 编辑真题
+     * @comment 编辑真题回复
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @author zzp
@@ -74,34 +74,33 @@ class ExamController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
         $id = request('id');
         $this->validate($request, [
-            'file_id' => 'required|min:1',
-            'type' => 'required|min:1',
+            'exam_id' => 'required|min:1',
+            'user_id' => 'required|min:1',
             'content' => 'required|min:1',
         ]);
 
-        $type = intval($request->input('type', 0));
-        $fileId = intval($request->input('file_id', 0));
+        $userId = intval($request->input('user_id', 0));
+        $examId = intval($request->input('exam_id', 0));
         $content = trim($request->input('content', ''));
 
         $data = [
-            'type' => $type,
-            'file_id' => $fileId,
+            'user_id' => $userId,
+            'exam_id' => $examId,
             'content' => $content,
         ];
         if (empty($id)) {
-            Exam::create($data);
+            ExamComment::create($data);
         } else {
-            Exam::where('id', $id)->update($data);
+            ExamComment::where('id', $id)->update($data);
         }
 
-        return redirect('/exams?file_id=' . $fileId);
+        return redirect('/exam_comments?exam_id=' . $examId);
     }
 
     /**
-     * @comment 删除真题
+     * @comment 删除真题回复
      * @param Request $request
      * @return $this
      * @author zzp
@@ -112,17 +111,17 @@ class ExamController extends Controller
         if ($request->isMethod('get')) {
             $returnData = [
                 'error' => 1,
-                'msg' => '真题删除失败'
+                'msg' => '真题回复删除失败'
             ];
         } elseif ($request->isMethod('post')) {
             $id = $request->input('id', 0);
             if (empty($id)) {
                 $returnData = [
                     'error' => 1,
-                    'msg' => '真题 id 不能为空'
+                    'msg' => '真题回复 id 不能为空'
                 ];
             } else {
-                Exam::destroy($id);
+                ExamComment::destroy($id);
                 $returnData = [
                     'error' => 0,
                     'msg' => ''
@@ -133,4 +132,16 @@ class ExamController extends Controller
         return response()->json($returnData)->setCallback($request->input('callback'));
     }
 
+    /**
+     * @comment 上传真题回复
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @author zzp
+     * @date 2017-11-11
+     */
+    public function upload(Request $request)
+    {
+        $returnData = examUpload($request->exam('exam'), 'exam');
+        return response()->json($returnData)->setCallback($request->input('callback'));
+    }
 }

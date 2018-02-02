@@ -12,4 +12,9 @@ class ExamComment extends Model
         return $this->belongsTo('\App\Exam', 'id', 'exam_id');
     }
 
+    public function user()
+    {
+        return $this->hasOne('\App\User', 'id', 'user_id');
+    }
+
 }

@@ -131,6 +131,7 @@
     {{--<script src="/bower_components/bootstrap-switch/dist/js/bootstrap-switch.min.js'"></script>--}}
     <script src="/dropzone/dist/min/dropzone.min.js"></script>
     <script src="/datetimepicker-master/build/jquery.datetimepicker.full.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
     @yield('add_script')
     @include("layout.footer")
 </div>
