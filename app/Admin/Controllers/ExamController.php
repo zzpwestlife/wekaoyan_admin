@@ -74,7 +74,6 @@ class ExamController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
         $id = request('id');
         $this->validate($request, [
             'file_id' => 'required|min:1',
